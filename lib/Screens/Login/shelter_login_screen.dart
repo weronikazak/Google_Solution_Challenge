@@ -1,29 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:gsc_project/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-FirebaseAuth auth = FirebaseAuth.instance;
+import '../../constants.dart';
 
-class NormalUserLogin extends StatelessWidget {
+class ShelterLoginScreen extends StatelessWidget {
+  const ShelterLoginScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
+      alignment: Alignment.center,
       padding: EdgeInsets.all(20),
-      alignment: Alignment.topCenter,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text("Create account",
               style: TextStyle(fontSize: 30, color: kPrimaryColor),
               textAlign: TextAlign.left),
+          // Image(image: ),
           SizedBox(height: 20),
-          Text(
-            "We need your phone number just to make sure that you're not a robot / different creature / no idea for this description but something like that",
-            style: TextStyle(color: Colors.grey),
-            textAlign: TextAlign.left,
+          TextFormField(
+            decoration: InputDecoration(
+                labelText: "Enter your organisation name",
+                icon: Icon(Icons.phone_iphone)),
+          ),
+          TextFormField(
+            decoration: InputDecoration(
+                labelText: "Enter your phone number",
+                icon: Icon(Icons.phone_iphone)),
           ),
           TextFormField(
             decoration: InputDecoration(

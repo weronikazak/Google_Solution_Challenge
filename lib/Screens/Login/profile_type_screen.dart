@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Screens/Login/shelter_login_screen.dart';
 import 'package:gsc_project/Screens/Login/user_login_screen.dart';
 import 'package:gsc_project/constants.dart';
 
@@ -10,6 +11,7 @@ class ProfileTypeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double padding = 20;
     double imageSize = 90;
+    double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
         // appBar: AppBar(
@@ -25,6 +27,9 @@ class ProfileTypeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          Text("Choose Type",
+              style: TextStyle(fontSize: 50, color: kPrimaryColor)),
+          SizedBox(height: 20),
           RawMaterialButton(
             onPressed: () {
               Navigator.push(context,
@@ -43,7 +48,12 @@ class ProfileTypeScreen extends StatelessWidget {
             height: 20,
           ),
           RawMaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ShelterLoginScreen()));
+            },
             fillColor: kPrimaryColor,
             padding: EdgeInsets.all(padding),
             shape: CircleBorder(),
