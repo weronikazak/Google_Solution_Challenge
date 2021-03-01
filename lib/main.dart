@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
-
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-
-import 'Screens/Welcome/welcome_screen.dart';
-
-// final FirebaseAuth _auth = FirebaseAuth.instance;
 
 void main() {
   runApp(MyApp());
@@ -17,10 +11,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      // Title is to change ofc, I couldn't think of nothing
+      // else
+      title: 'Kind-Hearted',
       theme: ThemeData(
           primaryColor: kPrimaryColor, scaffoldBackgroundColor: Colors.white),
-      home: WelcomeScreen(),
+      debugShowMaterialGrid: false,
+      home: AuthService().handleAuth(),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gsc_project/Screens/Login/shelter_login_screen.dart';
-import 'package:gsc_project/Screens/Login/user_login_screen.dart';
+import 'package:gsc_project/Screens/Register/shelter_register_screen.dart';
+import 'package:gsc_project/Screens/Register/user_register_screen.dart';
 import 'package:gsc_project/constants.dart';
 
 class ProfileTypeScreen extends StatelessWidget {
@@ -32,8 +32,10 @@ class ProfileTypeScreen extends StatelessWidget {
           SizedBox(height: 20),
           RawMaterialButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NormalUserLogin()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NormalUserRegister()));
             },
             fillColor: kPrimaryColor,
             padding: EdgeInsets.all(padding),
@@ -52,7 +54,7 @@ class ProfileTypeScreen extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ShelterLoginScreen()));
+                      builder: (context) => ShelterRegisterScreen()));
             },
             fillColor: kPrimaryColor,
             padding: EdgeInsets.all(padding),
