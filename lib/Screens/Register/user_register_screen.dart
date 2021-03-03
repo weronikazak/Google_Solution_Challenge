@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Screens/User/user_main_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class NormalUserRegister extends StatefulWidget {
   @override
@@ -11,6 +13,12 @@ class NormalUserRegister extends StatefulWidget {
 
 class _NormalUserRegisterState extends State<NormalUserRegister> {
   final formKey = new GlobalKey<FormState>();
+
+  final SmsAutoFill _autoFill = SmsAutoFill();
+
+  // TODO Retrive user's phone number, so it will be easier
+  // to register
+  // final _retrievedNumber = new TextEditingController(text: await _autoFill.hint);
 
   String phoneNumber, verificationID, smsCode;
 
@@ -61,9 +69,15 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                   SizedBox(height: 40),
                   MaterialButton(
                     onPressed: () {
-                      codeSent
-                          ? AuthService().signInWithOTP(smsCode, verificationID)
-                          : verifyPhone(phoneNumber);
+                      if (codeSent) {
+                        AuthService().signInWithOTP(smsCode, verificationID);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserMainScreen()));
+                      } else {
+                        verifyPhone(phoneNumber);
+                      }
                     },
                     elevation: 0,
                     height: 50,
@@ -80,6 +94,10 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                 ],
               ),
             )));
+  }
+
+  Future<String> returnPhoneNumber(_autoFill) async {
+    return await _autoFill.hint;
   }
 
   Future<void> verifyPhone(String phoneNumber) async {
@@ -104,11 +122,12 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
     };
 
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        timeout: const Duration(seconds: 5),
-        verificationCompleted: verified,
-        verificationFailed: verificationFailed,
-        codeSent: smsSent,
-        codeAutoRetrievalTimeout: autoRetrievalTimeout);
+      phoneNumber: phoneNumber,
+      timeout: const Duration(seconds: 5),
+      verificationCompleted: verified,
+      verificationFailed: verificationFailed,
+      codeSent: smsSent,
+      codeAutoRetrievalTimeout: autoRetrievalTimeout,
+    );
   }
 }

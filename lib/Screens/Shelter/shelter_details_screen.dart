@@ -47,6 +47,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                           icon: Icon(
                             Icons.camera_alt,
                             size: 30,
+                            color: Colors.grey,
                           ),
                           iconSize: 30,
                         ),

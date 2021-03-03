@@ -1,8 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.gsc_project">
+
+  <!-- PERMISSIONS -->
+  <uses-permission  
+ android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+
    <application
         android:label="Kind-Hearted"
         android:icon="@mipmap/ic_launcher">
+
+      <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyA3OxkVMxT6MLS9q3dQk3efxB355RIKMI0"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

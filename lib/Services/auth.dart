@@ -9,7 +9,7 @@ class AuthService {
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return MainUserScreen();
+            return UserMainScreen();
           } else {
             return WelcomeScreen();
           }

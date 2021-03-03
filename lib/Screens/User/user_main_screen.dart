@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Screens/User/user_map.dart';
 
 import '../../constants.dart';
 
 // THE PAGE THAT USER SEES AFTER REGISTERING
 
-class MainUserScreen extends StatelessWidget {
+class UserMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double padding = 20;
@@ -18,18 +19,18 @@ class MainUserScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text("Choose Type",
-              style: TextStyle(fontSize: 50, color: kPrimaryColor)),
-          SizedBox(height: 20),
           RawMaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserReportMap()));
+            },
             fillColor: kPrimaryColor,
             padding: EdgeInsets.all(padding),
             shape: CircleBorder(),
-            child: Image.asset("assets/icons/coffee.png", height: imageSize),
+            child: Image.asset("assets/icons/donation.png", height: imageSize),
           ),
           Text(
-            "normal user",
+            "donate",
             style: TextStyle(color: kPrimaryColor, fontSize: 25),
           ),
           SizedBox(
@@ -40,22 +41,22 @@ class MainUserScreen extends StatelessWidget {
             fillColor: kPrimaryColor,
             padding: EdgeInsets.all(padding),
             shape: CircleBorder(),
-            child: Image.asset("assets/icons/coffee.png", height: imageSize),
+            child: Image.asset("assets/icons/help_2.png", height: imageSize),
           ),
           Text(
-            "shelter",
+            "report",
             style: TextStyle(color: kPrimaryColor, fontSize: 25),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          RawMaterialButton(
-            onPressed: () {},
-            fillColor: kPrimaryColor,
-            padding: EdgeInsets.all(padding),
-            shape: CircleBorder(),
-            child: Image.asset("assets/icons/coffee.png", height: imageSize),
-          ),
+          // SizedBox(
+          //   height: 20,
+          // ),
+          // RawMaterialButton(
+          //   onPressed: () {},
+          //   fillColor: kPrimaryColor,
+          //   padding: EdgeInsets.all(padding),
+          //   shape: CircleBorder(),
+          //   child: Image.asset("assets/icons/coffee.png", height: imageSize),
+          // ),
         ],
       ),
     ));
