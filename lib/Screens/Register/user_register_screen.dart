@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
-import 'package:sms_autofill/sms_autofill.dart';
+// import 'package:sms_autofill/sms_autofill.dart';
 
 class NormalUserRegister extends StatefulWidget {
   @override
@@ -14,10 +14,9 @@ class NormalUserRegister extends StatefulWidget {
 class _NormalUserRegisterState extends State<NormalUserRegister> {
   final formKey = new GlobalKey<FormState>();
 
-  final SmsAutoFill _autoFill = SmsAutoFill();
-
   // TODO Retrive user's phone number, so it will be easier
   // to register
+  // final SmsAutoFill _autoFill = SmsAutoFill();
   // final _retrievedNumber = new TextEditingController(text: await _autoFill.hint);
 
   String phoneNumber, verificationID, smsCode;
@@ -56,15 +55,17 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                     },
                   ),
                   codeSent
-                      ? TextFormField(
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(hintText: "Enter OTP"),
-                          onChanged: (code) {
-                            setState(() {
-                              this.smsCode = code;
-                            });
-                          },
-                        )
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration(hintText: "Enter OTP"),
+                            onChanged: (code) {
+                              setState(() {
+                                this.smsCode = code;
+                              });
+                            },
+                          ))
                       : Container(),
                   SizedBox(height: 40),
                   MaterialButton(
@@ -105,8 +106,7 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
       AuthService().signIn(authResult);
     };
 
-    final PhoneVerificationFailed verificationFailed =
-        (AuthException authException) {
+    final PhoneVerificationFailed verificationFailed = (authException) {
       print("${authException.message}");
     };
 

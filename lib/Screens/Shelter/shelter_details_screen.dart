@@ -1,7 +1,13 @@
+import 'dart:io';
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../constants.dart';
+import 'package:path/path.dart';
 
 class ShelterDetailsScreen extends StatefulWidget {
   @override
@@ -9,8 +15,12 @@ class ShelterDetailsScreen extends StatefulWidget {
 }
 
 class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
+  File image;
+
   @override
   Widget build(BuildContext context) {
+    final email = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
         body: Container(
             alignment: Alignment.center,
@@ -29,21 +39,34 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                       CircleAvatar(
                         radius: 70,
                         backgroundColor: kPrimaryColor,
-                        child: ClipOval(
-                          child: SizedBox(
-                            width: 120,
-                            height: 120,
-                            child: Image.asset(
-                              "assets/icons/user_2.png",
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
+                        child: (image != null)
+                            ? ClipOval(
+                                child: SizedBox(
+                                  width: 90,
+                                  height: 90,
+                                  child: Image.file(
+                                    image,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              )
+                            : ClipRect(
+                                child: SizedBox(
+                                  width: 90,
+                                  height: 90,
+                                  child: Image.asset(
+                                    "assets/icons/house.png",
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 60),
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            uploadImage(context);
+                          },
                           icon: Icon(
                             Icons.camera_alt,
                             size: 30,
@@ -56,12 +79,46 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    decoration: InputDecoration(labelText: "Organisation name"),
+                    initialValue: email,
+                    decoration: InputDecoration(enabled: false),
                   ),
                   TextFormField(
-                    // CHANGE TO SOME MAPS API
+                    decoration: InputDecoration(labelText: "Organisation name"),
+                    validator: (String val) {
+                      if (val.isEmpty) {
+                        return "This field cannot be empty";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Your city"),
+                    validator: (String val) {
+                      if (val.isEmpty) {
+                        return "This field cannot be empty";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Street number"),
+                    validator: (String val) {
+                      if (val.isEmpty) {
+                        return "This field cannot be empty";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
                     decoration: InputDecoration(
-                        labelText: "There should be an address"),
+                        labelText:
+                            "Post Code? Seriously guys, I don't know how this section should look like on British standards angry emoji"),
+                    validator: (String val) {
+                      if (val.isEmpty) {
+                        return "This field cannot be empty";
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 40),
                   MaterialButton(
@@ -77,5 +134,18 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                 ],
               ),
             )));
+  }
+
+  Future uploadImage(BuildContext context) async {
+    String fileName = basename(image.path);
+    // DocumentReference files = Firebase
+  }
+
+  Future getImages() async {
+    var gallery_img = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      image = gallery_img;
+    });
   }
 }

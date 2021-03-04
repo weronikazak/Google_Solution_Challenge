@@ -6,7 +6,7 @@ import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 class AuthService {
   handleAuth() {
     return StreamBuilder(
-        stream: FirebaseAuth.instance.onAuthStateChanged,
+        stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             return UserMainScreen();
@@ -25,8 +25,8 @@ class AuthService {
   }
 
   signInWithOTP(smsCode, verID) {
-    AuthCredential authCreds = PhoneAuthProvider.getCredential(
-        verificationId: verID, smsCode: smsCode);
+    AuthCredential authCreds =
+        PhoneAuthProvider.credential(verificationId: verID, smsCode: smsCode);
     signIn(authCreds);
   }
 }
