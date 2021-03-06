@@ -8,6 +8,7 @@ class AuthService {
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
+          print(snapshot);
           if (snapshot.hasData) {
             return UserMainScreen();
           } else {

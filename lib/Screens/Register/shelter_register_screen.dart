@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_details_screen.dart';
-import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
 
@@ -86,10 +85,14 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
             )));
   }
 
+  // TODO display what kind of error occured during registration
   void registerWithEmailAndPassword() async {
     final User user = (await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-                email: emailController.text, password: passwordController.text))
+                email: emailController.text, password: passwordController.text)
+            .catchError((e) {
+      print(e);
+    }))
         .user;
     if (user != null) {
       setState(() {

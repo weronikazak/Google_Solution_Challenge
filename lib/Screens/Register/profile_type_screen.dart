@@ -1,15 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Register/shelter_register_screen.dart';
 import 'package:gsc_project/Screens/Register/user_register_screen.dart';
-import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
 
 class ProfileTypeScreen extends StatelessWidget {
   // const ProfileTypeScreen({Key key}) : super(key: key);
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

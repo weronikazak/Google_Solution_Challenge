@@ -1,13 +1,13 @@
 import 'dart:io';
 
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Screens/Shelter/arguments.dart';
+import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../constants.dart';
-import 'package:path/path.dart';
 
 class ShelterDetailsScreen extends StatefulWidget {
   @override
@@ -16,10 +16,18 @@ class ShelterDetailsScreen extends StatefulWidget {
 
 class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
   File image;
+  String email;
+  bool imageUploaded = false;
+
+  final formKey = new GlobalKey<FormState>();
+  final TextEditingController postcodeController = new TextEditingController();
+  final TextEditingController cityController = new TextEditingController();
+  final TextEditingController streetController = new TextEditingController();
+  final TextEditingController nameController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final email = ModalRoute.of(context).settings.arguments;
+    email = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
         body: Container(
@@ -65,7 +73,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                         padding: EdgeInsets.only(top: 60),
                         child: IconButton(
                           onPressed: () {
-                            uploadImage(context);
+                            getImages();
                           },
                           icon: Icon(
                             Icons.camera_alt,
@@ -80,9 +88,11 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                   SizedBox(height: 20),
                   TextFormField(
                     initialValue: email,
-                    decoration: InputDecoration(enabled: false),
+                    decoration: InputDecoration(
+                        labelText: "Your email", enabled: false),
                   ),
                   TextFormField(
+                    controller: nameController,
                     decoration: InputDecoration(labelText: "Organisation name"),
                     validator: (String val) {
                       if (val.isEmpty) {
@@ -92,6 +102,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                     },
                   ),
                   TextFormField(
+                    controller: cityController,
                     decoration: InputDecoration(labelText: "Your city"),
                     validator: (String val) {
                       if (val.isEmpty) {
@@ -101,6 +112,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                     },
                   ),
                   TextFormField(
+                    controller: streetController,
                     decoration: InputDecoration(labelText: "Street number"),
                     validator: (String val) {
                       if (val.isEmpty) {
@@ -110,9 +122,10 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                     },
                   ),
                   TextFormField(
+                    controller: postcodeController,
                     decoration: InputDecoration(
                         labelText:
-                            "Post Code? Seriously guys, I don't know how this section should look like on British standards angry emoji"),
+                            "Post Code? Seriously guys, I don't know how this section should look like angry emoji"),
                     validator: (String val) {
                       if (val.isEmpty) {
                         return "This field cannot be empty";
@@ -122,7 +135,9 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                   ),
                   SizedBox(height: 40),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      addToDatabase(context);
+                    },
                     elevation: 0,
                     height: 50,
                     color: kPrimaryColor,
@@ -136,16 +151,42 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
             )));
   }
 
-  Future uploadImage(BuildContext context) async {
-    String fileName = basename(image.path);
-    // DocumentReference files = Firebase
+  Future addToDatabase(BuildContext context) async {
+    FirebaseFirestore.instance.collection("shelters").add({
+      "email": email,
+      "name": nameController.text,
+      "city": cityController.text,
+      "street": streetController.text,
+      "postcode": postcodeController.text,
+      "image": "¯\_(ツ)_/¯ working on it"
+    });
+
+    // String fileName = basename(image.path);
+    // Reference firebaseReference =
+    //     FirebaseStorage.instance.ref().child(fileName);
+    // UploadTask uploadTask = firebaseReference.putFile(image);
+    // TaskSnapshot taskSnapshot =
+    //     await uploadTask.whenComplete(() => {image_uploaded = true});
+
+    setState(() {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Profile uploaded succesfully!")));
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ShelterMainPage(),
+              settings: RouteSettings(
+                  arguments: new ArgsSettings(nameController.text, image))),
+          ModalRoute.withName("Shelter"));
+    });
   }
 
   Future getImages() async {
-    var gallery_img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var galleryImg = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      image = gallery_img;
+      image = galleryImg;
     });
   }
 }

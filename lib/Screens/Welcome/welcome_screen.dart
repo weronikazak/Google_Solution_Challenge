@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Register/profile_type_screen.dart';
-import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
   double buttonHeight = 60;
 
   @override

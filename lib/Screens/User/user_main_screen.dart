@@ -23,12 +23,14 @@ class UserMainScreen extends StatelessWidget {
           actions: <Widget>[
             Builder(
               builder: (BuildContext context) {
-                return FlatButton(
+                return TextButton(
                   onPressed: () async {
                     await AuthService().signOut();
                   },
-                  child: Text("Sign Out"),
-                  textColor: kPrimaryColor,
+                  child: Text(
+                    "Sign Out",
+                    style: TextStyle(color: kPrimaryColor),
+                  ),
                 );
               },
             )
