@@ -21,17 +21,13 @@ class UserMainScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           actions: <Widget>[
-            Builder(
+           Builder(
               builder: (BuildContext context) {
-                return TextButton(
-                  onPressed: () async {
-                    await AuthService().signOut();
-                  },
-                  child: Text(
-                    "Sign Out",
-                    style: TextStyle(color: kPrimaryColor),
-                  ),
-                );
+                return IconButton(
+                    onPressed: () async {
+                      await AuthService().signOut();
+                    },
+                    icon: Icon(Icons.logout));
               },
             )
           ],

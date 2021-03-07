@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Register/profile_type_screen.dart';
+import 'package:gsc_project/Screens/login_screen.dart';
 import 'package:gsc_project/constants.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -42,7 +43,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             child: MaterialButton(
               onPressed: () {
-                // AuthService().signIn(authCreds);
+                // Navigator.pushNamed(context, "/login");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
               },
               elevation: 0,
               height: buttonHeight,
@@ -58,6 +61,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             child: MaterialButton(
               onPressed: () {
+                // Navigator.pushNamed(context, "/registrationType");
                 Navigator.push(
                     context,
                     MaterialPageRoute(

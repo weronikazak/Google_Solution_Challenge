@@ -171,15 +171,16 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
     setState(() {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Profile uploaded succesfully!")));
-
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ShelterMainPage(),
-              settings: RouteSettings(
-                  arguments: new ArgsSettings(nameController.text, image))),
-          ModalRoute.withName("Shelter"));
     });
+
+    print("IMAGE " + image.toString());
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ShelterMainPage(),
+            settings: RouteSettings(
+                arguments: ArgsSettings(nameController.text, image))),
+        ModalRoute.withName("/shelterMain"));
   }
 
   Future getImages() async {

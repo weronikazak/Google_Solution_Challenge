@@ -16,7 +16,7 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
-  bool success = false;
+  // bool success = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +41,17 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
                   SizedBox(height: 20),
                   TextFormField(
                     controller: emailController,
-                    decoration:
-                        InputDecoration(labelText: "Enter your email number"),
+                    decoration: InputDecoration(labelText: "Enter your email."),
                     validator: (String val) {
                       if (val.isEmpty) {
-                        return "This field cannot be empty";
+                        return "This field cannot be empty.";
+                      }
+
+                      bool emailValid = RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(val);
+                      if (!emailValid) {
+                        return "This field has to be an email.";
                       }
                       return null;
                     },
@@ -59,7 +65,7 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
                         InputDecoration(labelText: "Enter your password"),
                     validator: (String val) {
                       if (val.isEmpty) {
-                        return "This field cannot be empty";
+                        return "This field cannot be empty.";
                       }
                       return null;
                     },
@@ -96,30 +102,12 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
         .user;
     if (user != null) {
       setState(() {
-        success = true;
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ShelterDetailsScreen(),
                 settings: RouteSettings(arguments: emailController.text)));
       });
-    } else {
-      success = false;
-    }
-  }
-
-  // TODO: to use later
-  void loginWithEmailAndPassword() async {
-    final User user = (await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text))
-        .user;
-
-    if (user != null) {
-      setState(() {
-        success = true;
-      });
-    } else {
-      success = false;
     }
   }
 }

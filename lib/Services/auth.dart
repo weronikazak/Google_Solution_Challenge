@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
 import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 
@@ -8,9 +9,15 @@ class AuthService {
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
-          print(snapshot);
           if (snapshot.hasData) {
-            return UserMainScreen();
+            print("SNPSHOT SNAPSHOT " + snapshot.data.toString());
+            print("SNPSHOT SNAPSHOT " + snapshot.data.email);
+
+            if (snapshot.data.email != null) {
+              return ShelterMainPage();
+            } else {
+              return UserMainScreen();
+            }
           } else {
             return WelcomeScreen();
           }
