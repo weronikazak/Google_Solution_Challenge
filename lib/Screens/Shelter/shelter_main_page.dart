@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
@@ -10,8 +11,8 @@ class ShelterMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ArgsSettings args = ModalRoute.of(context).settings.arguments;
-    print("SENT ARGUMENTS " + args.toString());
+    // final ArgsSettings args = ModalRoute.of(context).settings.arguments;
+    // print("SENT ARGUMENTS " + args.toString());
 
     return Scaffold(
         appBar: AppBar(
@@ -26,6 +27,10 @@ class ShelterMainPage extends StatelessWidget {
                 return IconButton(
                     onPressed: () async {
                       await AuthService().signOut();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WelcomeScreen()));
                     },
                     icon: Icon(Icons.logout));
               },
@@ -41,35 +46,19 @@ class ShelterMainPage extends StatelessWidget {
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: kPrimaryColor,
-                    child: (args.image != null)
-                        ? ClipOval(
-                            child: SizedBox(
-                              width: 40,
-                              height: 40,
-                              // TODO: pass arguments from the Shelter Details page
-                              // child: Image.file(
-                              //   args.image,
-                              //   fit: BoxFit.fill,
-                              // ),
-                              child: Image.asset(
-                                "assets/icons/house.png",
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          )
-                        : ClipRect(
-                            child: SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: Image.asset(
-                                "assets/icons/house.png",
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
+                    child: ClipRect(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Image.asset(
+                          "assets/icons/house.png",
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
                   ),
                   Text(
-                    args.name,
+                    "Organisation's name",
                     style: TextStyle(color: kPrimaryColor, fontSize: 30),
                   ),
                 ],

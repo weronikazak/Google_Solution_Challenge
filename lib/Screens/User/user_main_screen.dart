@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/User/user_map.dart';
+import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
@@ -21,11 +22,15 @@ class UserMainScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           actions: <Widget>[
-           Builder(
+            Builder(
               builder: (BuildContext context) {
                 return IconButton(
                     onPressed: () async {
                       await AuthService().signOut();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WelcomeScreen()));
                     },
                     icon: Icon(Icons.logout));
               },
@@ -39,10 +44,7 @@ class UserMainScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               RawMaterialButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserReportMap()));
-                },
+                onPressed: () {},
                 fillColor: kPrimaryColor,
                 padding: EdgeInsets.all(padding),
                 shape: CircleBorder(),
@@ -57,7 +59,10 @@ class UserMainScreen extends StatelessWidget {
                 height: 20,
               ),
               RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserReportMap()));
+                },
                 fillColor: kPrimaryColor,
                 padding: EdgeInsets.all(padding),
                 shape: CircleBorder(),
