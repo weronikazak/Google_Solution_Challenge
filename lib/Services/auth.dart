@@ -10,8 +10,10 @@ class AuthService {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            print("SNPSHOT SNAPSHOT " + snapshot.data.toString());
-            print("SNPSHOT SNAPSHOT " + snapshot.data.email);
+            // TODO, if email address is null, go to User Main Page
+            // otherwise, go to Shelter Main Page
+            print("SNAPSHOT SNAPSHOT " + snapshot.data.toString());
+            print("SNAPSHOT SNAPSHOT " + snapshot.data.email);
 
             if (snapshot.data.email != null) {
               return ShelterMainPage();

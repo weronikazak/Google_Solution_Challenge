@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gsc_project/Screens/User/user_map.dart';
+import 'package:gsc_project/Screens/User/user_report_map.dart';
 import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
 

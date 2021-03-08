@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 // import 'package:sms_autofill/sms_autofill.dart';
 
 class NormalUserRegister extends StatefulWidget {
@@ -22,6 +23,7 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
   String phoneNumber, verificationID, smsCode;
 
   bool codeSent = false;
+  SmsAutoFill smsAutoFill = SmsAutoFill();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                   SizedBox(height: 20),
                   TextFormField(
                     decoration: InputDecoration(
-                        labelText: "Enter your phone number",
+                        labelText: "Phone number: (+xx xxx-xxx-xxx)",
                         icon: Icon(Icons.phone_iphone)),
                     onChanged: (number) {
                       setState(() {
@@ -59,7 +61,7 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                           padding: EdgeInsets.symmetric(horizontal: 40),
                           child: TextFormField(
                             keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(hintText: "Enter OTP"),
+                            decoration: InputDecoration(hintText: "OTP Code"),
                             onChanged: (code) {
                               setState(() {
                                 this.smsCode = code;
@@ -67,15 +69,28 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                             },
                           ))
                       : Container(),
-                  SizedBox(height: 40),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  (phoneNumber.isEmpty)
+                      ? MaterialButton(
+                          onPressed: () async =>
+                              {this.phoneNumber = await smsAutoFill.hint},
+                          elevation: 0,
+                          height: 50,
+                          color: kPrimaryColor,
+                          minWidth: double.maxFinite,
+                          child: Text("Get current number",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16)),
+                          textColor: Colors.white,
+                        )
+                      : Container(),
+                  SizedBox(height: 20),
                   MaterialButton(
                     onPressed: () {
                       if (codeSent) {
                         AuthService().signInWithOTP(smsCode, verificationID);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => UserMainScreen()));
                       } else {
                         verifyPhone(phoneNumber);
                       }
@@ -97,17 +112,19 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
             )));
   }
 
-  Future<String> returnPhoneNumber(_autoFill) async {
-    return await _autoFill.hint;
-  }
-
   Future<void> verifyPhone(String phoneNumber) async {
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
       AuthService().signIn(authResult);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => UserMainScreen()));
     };
 
-    final PhoneVerificationFailed verificationFailed = (authException) {
-      print("${authException.message}");
+    final PhoneVerificationFailed verificationFailed =
+        (FirebaseAuthException authException) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+              'Phone number verification failed. Message: ${authException.message}')));
     };
 
     final PhoneCodeSent smsSent = (String verID, [int forceResend]) {

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
+import 'package:gsc_project/Services/auth.dart';
 
 import '../constants.dart';
 
@@ -75,10 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (shelterLogin) {
                           loginWithEmailAndPassword();
                         } else {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => UserMainScreen()));
+                          loginWithPhoneNumber();
                         }
                       }
                     },
@@ -108,5 +106,15 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       print("Something went wrong");
     }
+  }
+
+  void loginWithPhoneNumber() async {
+    ConfirmationResult confirmationResult = await FirebaseAuth.instance
+        .signInWithPhoneNumber(
+            phoneEmail,
+            RecaptchaVerifier(
+                container: "recaptcha",
+                size: RecaptchaVerifierSize.compact,
+                theme: RecaptchaVerifierTheme.dark));
   }
 }
