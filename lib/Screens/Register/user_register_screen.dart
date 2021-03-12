@@ -20,7 +20,8 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
   // final SmsAutoFill _autoFill = SmsAutoFill();
   // final _retrievedNumber = new TextEditingController(text: await _autoFill.hint);
 
-  String phoneNumber, verificationID, smsCode;
+  String phoneNumber = "";
+  String verificationID, smsCode;
 
   bool codeSent = false;
   SmsAutoFill smsAutoFill = SmsAutoFill();
@@ -72,7 +73,7 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                   SizedBox(
                     height: 20,
                   ),
-                  (phoneNumber.isEmpty)
+                  (phoneNumber == "")
                       ? MaterialButton(
                           onPressed: () async =>
                               {this.phoneNumber = await smsAutoFill.hint},
@@ -91,6 +92,10 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                     onPressed: () {
                       if (codeSent) {
                         AuthService().signInWithOTP(smsCode, verificationID);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserMainScreen()));
                       } else {
                         verifyPhone(phoneNumber);
                       }
@@ -100,9 +105,9 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                     color: kPrimaryColor,
                     minWidth: double.maxFinite,
                     child: codeSent
-                        ? Text("SENT CODE",
+                        ? Text("CREATE ACCOUNT",
                             style: TextStyle(color: Colors.white, fontSize: 16))
-                        : Text("CREATE ACCOUNT",
+                        : Text("RESEND CODE",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 16)),
                     textColor: Colors.white,
@@ -113,13 +118,12 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
   }
 
   Future<void> verifyPhone(String phoneNumber) async {
-    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-      AuthService().signIn(authResult);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => UserMainScreen()));
+    final PhoneVerificationCompleted verified =
+        (PhoneAuthCredential authResult) async {
+      await FirebaseAuth.instance.signInWithCredential(authResult);
     };
 
-    final PhoneVerificationFailed verificationFailed =
+    PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException authException) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.red,
@@ -127,24 +131,30 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
               'Phone number verification failed. Message: ${authException.message}')));
     };
 
-    final PhoneCodeSent smsSent = (String verID, [int forceResend]) {
+    PhoneCodeSent smsSent = (String verID, [int forceResend]) async {
       this.verificationID = verID;
       setState(() {
         this.codeSent = true;
       });
     };
 
-    final PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verID) {
+    PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verID) {
       this.verificationID = verID;
     };
 
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      timeout: const Duration(seconds: 5),
-      verificationCompleted: verified,
-      verificationFailed: verificationFailed,
-      codeSent: smsSent,
-      codeAutoRetrievalTimeout: autoRetrievalTimeout,
-    );
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        timeout: const Duration(seconds: 5),
+        verificationCompleted: verified,
+        verificationFailed: verificationFailed,
+        codeSent: smsSent,
+        codeAutoRetrievalTimeout: autoRetrievalTimeout,
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Failed to Verify Number: ${e}')));
+    }
   }
 }

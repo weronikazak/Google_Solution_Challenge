@@ -12,10 +12,12 @@ class AuthService {
           if (snapshot.hasData) {
             // TODO, if email address is null, go to User Main Page
             // otherwise, go to Shelter Main Page
-            print("SNAPSHOT SNAPSHOT " + snapshot.data.toString());
-            print("SNAPSHOT SNAPSHOT " + snapshot.data.email);
 
-            if (snapshot.data.email != null) {
+            // print("SNAPSHOT SNAPSHOT 1 " + snapshot.data.toString());
+            // print("SNAPSHOT SNAPSHOT 2 " + snapshot.data.email.toString());
+            // print("SNAPSHOT SNAPSHOT 3" + snapshot.data.user);
+
+            if (snapshot.data.email.toString() != "") {
               return ShelterMainPage();
             } else {
               return UserMainScreen();
@@ -26,12 +28,12 @@ class AuthService {
         });
   }
 
-  signOut() {
-    FirebaseAuth.instance.signOut();
+  signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 
-  signIn(AuthCredential authCreds) {
-    FirebaseAuth.instance.signInWithCredential(authCreds);
+  signIn(AuthCredential authCreds) async {
+    await FirebaseAuth.instance.signInWithCredential(authCreds);
   }
 
   signInWithOTP(smsCode, verID) {

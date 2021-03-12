@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
-import 'package:gsc_project/Screens/User/user_main_screen.dart';
-import 'package:gsc_project/Services/auth.dart';
 
 import '../constants.dart';
 
