@@ -107,7 +107,7 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                     child: codeSent
                         ? Text("CREATE ACCOUNT",
                             style: TextStyle(color: Colors.white, fontSize: 16))
-                        : Text("RESEND CODE",
+                        : Text("SEND OTP CODE",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 16)),
                     textColor: Colors.white,

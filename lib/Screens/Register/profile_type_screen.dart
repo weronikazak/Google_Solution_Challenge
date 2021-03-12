@@ -23,7 +23,7 @@ class ProfileTypeScreen extends StatelessWidget {
                 Container(
                   child: Text(
                     "Choose Type",
-                    style: TextStyle(fontSize: 50, color: kPrimaryColor),
+                    style: TextStyle(fontSize: 40, color: kPrimaryColor),
                     textAlign: TextAlign.center,
                   ),
                 ),
