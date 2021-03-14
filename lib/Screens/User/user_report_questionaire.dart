@@ -32,7 +32,7 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
           ),
           Text("AGE:"),
           CheckboxListTile(
-            title: Text("Old"),
+            title: Text("Elderly"),
             value: false,
             onChanged: (val) {},
           ),

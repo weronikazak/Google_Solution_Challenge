@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
+import 'package:gsc_project/Screens/User/user_report_questionaire.dart';
+import 'package:gsc_project/Screens/User/donate.dart';
 
 import '../constants.dart';
 
@@ -74,7 +76,11 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (formKey.currentState.validate()) {
                         if (shelterLogin) {
-                          loginWithEmailAndPassword();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Donate()));
+                          //loginWithEmailAndPassword();
                         } else {
                           loginWithPhoneNumber();
                         }
