@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Register/profile_type_screen.dart';
-import 'package:gsc_project/Screens/login_screen.dart';
+import 'package:gsc_project/Screens/Login/login_screen.dart';
 import 'package:gsc_project/constants.dart';
 
 class WelcomeScreen extends StatefulWidget {

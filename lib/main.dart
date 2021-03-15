@@ -7,7 +7,7 @@ import 'package:gsc_project/Screens/Shelter/shelter_details_screen.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
 import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
-import 'package:gsc_project/Screens/login_screen.dart';
+import 'package:gsc_project/Screens/Login/login_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
 

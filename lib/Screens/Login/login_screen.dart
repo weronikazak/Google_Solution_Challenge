@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
+import 'package:gsc_project/Screens/User/donate.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -72,7 +73,11 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (formKey.currentState.validate()) {
                         if (shelterLogin) {
-                          loginWithEmailAndPassword();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Donate()));
+                          //loginWithEmailAndPassword();
                         } else {
                           loginWithPhoneNumber();
                         }

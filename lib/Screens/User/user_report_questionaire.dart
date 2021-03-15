@@ -30,8 +30,31 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
           ),
           Text(
             "Just to make sure you're helping right person or getting rid of duplicated reports smth smth smth",
-            style: TextStyle(color: Colors.grey, fontSize: 16),
-            textAlign: TextAlign.left,
+            style: TextStyle(color: Colors.grey, fontSize: 24),
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Text("AGE:"),
+          CheckboxListTile(
+            title: Text("Elderly"),
+            value: false,
+            onChanged: (val) {},
+          ),
+          CheckboxListTile(
+            title: Text("Adult"),
+            value: false,
+            onChanged: (val) {},
+          ),
+          CheckboxListTile(
+            title: Text("Young"),
+            value: false,
+            onChanged: (val) {},
+          ),
+          CheckboxListTile(
+            title: Text("Not sure"),
+            value: false,
+            onChanged: (val) {},
           ),
           SizedBox(
             height: 20,
