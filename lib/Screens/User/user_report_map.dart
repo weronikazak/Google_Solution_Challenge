@@ -19,7 +19,7 @@ class _UserReportMapState extends State<UserReportMap> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    location.onLocationChanged().listen((event) {
+    location.onLocationChanged.listen((event) {
       mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
           target: LatLng(event.latitude, event.longitude), zoom: 20)));
     });

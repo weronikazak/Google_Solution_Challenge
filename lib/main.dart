@@ -38,7 +38,10 @@ class MyApp extends StatelessWidget {
       routes: {"/shelterMain": (context) => ShelterMainPage()},
       title: 'Kind-Hearted',
       theme: ThemeData(
-          primaryColor: kPrimaryColor, scaffoldBackgroundColor: Colors.white),
+        primaryColor: kPrimaryColor,
+        scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Fjalla One',
+      ),
       debugShowMaterialGrid: false,
       home: AuthService().handleAuth(),
     );

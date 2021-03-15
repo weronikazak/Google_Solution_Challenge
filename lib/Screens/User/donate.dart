@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants.dart';
-import '../../constants.dart';
+import 'package:gsc_project/Screens/User/shelter_info.dart';
+import 'package:gsc_project/Screens/Shelter/shelter_details_screen.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -16,21 +17,23 @@ class Donate extends StatefulWidget {
 class _Donate extends State<Donate> {
   @override
   Widget build(BuildContext context) {
-    double padding = 20;
-    double imageSize = 90;
-
-    List<int> shelters = [1, 2, 3, 4, 5, 6, 7];
+    // CollectionReference shelters =
+    //     FirebaseFirestore.instance.collection('shelters');
+    // shelters.get();
+    // print(shelters);
+    List<int> s = [1, 2, 3, 4, 5, 6];
 
     return Scaffold(
         appBar: AppBar(
           title: Center(
-            child: Text('HOMELESS CHARITIES'),
-          ),
+              child: Text(
+            'HOMELESS CHARITIES',
+          )),
           backgroundColor: kPrimaryColor,
         ),
         body: Column(
           children: <Widget>[
-            for (var i in shelters)
+            for (var i in s)
               Container(
                   decoration: BoxDecoration(
                       border: Border.all(
@@ -45,6 +48,7 @@ class _Donate extends State<Donate> {
                         child: Icon(
                           Icons.house,
                           color: kPrimaryColor,
+                          size: 30.0,
                         )),
                     Text(
                       "Name Of Charity",
@@ -55,11 +59,24 @@ class _Donate extends State<Donate> {
                           fontWeight: FontWeight.bold),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 30.0),
-                      child: Text(
-                        "More Info...",
-                        style: TextStyle(color: Colors.black, fontSize: 18),
-                      ),
+                      padding: EdgeInsets.only(left: 40.0),
+                      child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(kPrimaryColor),
+                            elevation: MaterialStateProperty.all(5.0),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ShelterInfo()),
+                            );
+                          },
+                          child: Text(
+                            "More Info...",
+                            style: TextStyle(color: Colors.black, fontSize: 18),
+                          )),
                     )
                   ])),
           ],
