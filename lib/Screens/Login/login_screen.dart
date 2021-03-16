@@ -31,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("Login",
-                      style: TextStyle(fontSize: 30, color: kPrimaryColor),
+                      style: TextStyle(
+                          fontSize: klargeFontSize, color: kPrimaryColor),
                       textAlign: TextAlign.left),
                   SizedBox(height: 20),
                   Text(
@@ -59,6 +60,9 @@ class _LoginPageState extends State<LoginPage> {
                       ? Padding(
                           padding: EdgeInsets.only(left: 40, right: 10),
                           child: TextFormField(
+                            obscureText: true,
+                            enableSuggestions: false,
+                            autocorrect: false,
                             decoration: InputDecoration(
                                 hintText: "Enter your password"),
                             onChanged: (val) {
@@ -73,13 +77,14 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (formKey.currentState.validate()) {
                         if (shelterLogin) {
+                          loginWithEmailAndPassword();
+                        } else {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Donate()));
-                          //loginWithEmailAndPassword();
-                        } else {
-                          loginWithPhoneNumber();
+
+                          // loginWithPhoneNumber();
                         }
                       }
                     },
@@ -88,7 +93,8 @@ class _LoginPageState extends State<LoginPage> {
                     color: kPrimaryColor,
                     minWidth: double.maxFinite,
                     child: Text("LOGIN",
-                        style: TextStyle(color: Colors.white, fontSize: 16)),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: ksmallFontSize)),
                     textColor: Colors.white,
                   ),
                 ],
@@ -96,28 +102,40 @@ class _LoginPageState extends State<LoginPage> {
             )));
   }
 
-  void loginWithEmailAndPassword() async {
-    final User user = (await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: phoneEmail, password: password))
-        .user;
+  void createScaffold(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(backgroundColor: Colors.red, content: Text(text)));
+  }
 
-    if (user != null) {
-      setState(() {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ShelterMainPage()));
-      });
-    } else {
-      print("Something went wrong");
+  void loginWithEmailAndPassword() async {
+    try {
+      UserCredential userCreds = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: phoneEmail, password: password);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ShelterMainPage()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-bot-found") {
+        createScaffold("No user found for that email.");
+      } else if (e.code == "wrong-password") {
+        createScaffold("Wrong password provided for that user.");
+      }
     }
   }
 
   void loginWithPhoneNumber() async {
-    ConfirmationResult confirmationResult = await FirebaseAuth.instance
-        .signInWithPhoneNumber(
-            phoneEmail,
-            RecaptchaVerifier(
-                container: "recaptcha",
-                size: RecaptchaVerifierSize.compact,
-                theme: RecaptchaVerifierTheme.dark));
+    try {
+      ConfirmationResult confirmationResult = await FirebaseAuth.instance
+          .signInWithPhoneNumber(
+              phoneEmail,
+              RecaptchaVerifier(
+                  container: "recaptcha",
+                  size: RecaptchaVerifierSize.compact,
+                  theme: RecaptchaVerifierTheme.dark));
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Donate()));
+    } on FirebaseAuthException catch (e) {
+      createScaffold("Failed to login. Details: ${e.message}");
+    }
   }
 }

@@ -38,7 +38,8 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("Create an account",
-                      style: TextStyle(fontSize: 30, color: kPrimaryColor),
+                      style: TextStyle(
+                          fontSize: klargeFontSize, color: kPrimaryColor),
                       textAlign: TextAlign.left),
                   SizedBox(height: 20),
                   Text(
@@ -82,34 +83,29 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                           color: kPrimaryColor,
                           minWidth: double.maxFinite,
                           child: Text("Get current number",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16)),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ksmallFontSize)),
                           textColor: Colors.white,
                         )
                       : Container(),
                   SizedBox(height: 20),
                   MaterialButton(
                     onPressed: () {
-                      if (codeSent) {
-                        AuthService().signInWithOTP(smsCode, verificationID);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => UserMainScreen()));
-                      } else {
-                        verifyPhone(phoneNumber);
-                      }
+                      verifyPhone(phoneNumber);
+                      codeSent = true;
                     },
                     elevation: 0,
                     height: 50,
                     color: kPrimaryColor,
                     minWidth: double.maxFinite,
                     child: codeSent
-                        ? Text("CREATE ACCOUNT",
-                            style: TextStyle(color: Colors.white, fontSize: 16))
-                        : Text("SEND OTP CODE",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16)),
+                        ? Text("SEND OTP CODE",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: ksmallFontSize))
+                        : Text("CREATE ACCOUNT",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: ksmallFontSize)),
                     textColor: Colors.white,
                   ),
                 ],
@@ -118,40 +114,54 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
   }
 
   Future<void> verifyPhone(String phoneNumber) async {
-    final PhoneVerificationCompleted verified =
+    // COMPLETED
+    PhoneVerificationCompleted verified =
         (PhoneAuthCredential authResult) async {
       await FirebaseAuth.instance.signInWithCredential(authResult);
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => UserMainScreen()));
     };
 
-    PhoneVerificationFailed verificationFailed =
-        (FirebaseAuthException authException) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.red,
-          content: Text(
-              'Phone number verification failed. Message: ${authException.message}')));
+    // FAIL
+    PhoneVerificationFailed verificationFailed = (FirebaseAuthException e) {
+      if (e.code == "invalid-phone-number") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('The provided phone number is not valid.')));
+        this.codeSent = false;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+                'Phone number verification failed. Message: ${e.message}')));
+      }
     };
 
-    PhoneCodeSent smsSent = (String verID, [int forceResend]) async {
+    // CODE SENT
+    PhoneCodeSent codeSent = (String verID, int resendToken) async {
       this.verificationID = verID;
-      setState(() {
-        this.codeSent = true;
-      });
+      PhoneAuthCredential phoneAuthCredential =
+          PhoneAuthProvider.credential(verificationId: verID, smsCode: smsCode);
+      await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
     };
 
+    // CODE RENEVAL
     PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verID) {
       this.verificationID = verID;
+      this.codeSent = false;
     };
 
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        timeout: const Duration(seconds: 5),
+        timeout: const Duration(seconds: 60),
         verificationCompleted: verified,
         verificationFailed: verificationFailed,
-        codeSent: smsSent,
+        codeSent: codeSent,
         codeAutoRetrievalTimeout: autoRetrievalTimeout,
       );
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.red,
           content: Text('Failed to Verify Number: ${e}')));

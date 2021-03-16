@@ -20,15 +20,30 @@ class ProfileTypeScreen extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: ListView(
               children: [
+                SizedBox(height: 20),
                 Container(
                   child: Text(
-                    "Choose Type",
-                    style: TextStyle(fontSize: 40, color: kPrimaryColor),
+                    "CHOOSE TYPE",
+                    style: TextStyle(
+                        fontSize: klargeFontSize,
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    "Some way longer text here because this page looks so awkward and empty.",
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
                 Container(
-                  height: height - 160,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -39,7 +54,7 @@ class ProfileTypeScreen extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => NormalUserRegister()));
                         },
-                        fillColor: kPrimaryColor,
+                        fillColor: kSecondaryColor,
                         padding: EdgeInsets.all(padding),
                         shape: CircleBorder(),
                         child: Image.asset("assets/icons/user_1.png",
@@ -47,7 +62,8 @@ class ProfileTypeScreen extends StatelessWidget {
                       ),
                       Text(
                         "normal user",
-                        style: TextStyle(color: kPrimaryColor, fontSize: 25),
+                        style: TextStyle(
+                            color: Colors.grey, fontSize: kmediumFontSize),
                       ),
                       SizedBox(
                         height: 20,
@@ -60,7 +76,7 @@ class ProfileTypeScreen extends StatelessWidget {
                                   builder: (context) =>
                                       ShelterRegisterScreen()));
                         },
-                        fillColor: kPrimaryColor,
+                        fillColor: kSecondaryColor,
                         padding: EdgeInsets.all(padding),
                         shape: CircleBorder(),
                         child: Image.asset("assets/icons/shelter.png",
@@ -68,7 +84,8 @@ class ProfileTypeScreen extends StatelessWidget {
                       ),
                       Text(
                         "shelter",
-                        style: TextStyle(color: kPrimaryColor, fontSize: 25),
+                        style: TextStyle(
+                            color: Colors.grey, fontSize: kmediumFontSize),
                       ),
                       // SUSPENDED COFFEE THING
                       // good thing it's flexible

@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Screens/Login/login_screen.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_details_screen.dart';
+import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
+import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
 
@@ -30,7 +34,8 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("Create an account",
-                      style: TextStyle(fontSize: 30, color: kPrimaryColor),
+                      style: TextStyle(
+                          fontSize: klargeFontSize, color: kPrimaryColor),
                       textAlign: TextAlign.left),
                   SizedBox(height: 20),
                   Text(
@@ -83,7 +88,8 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
                     color: kPrimaryColor,
                     minWidth: double.maxFinite,
                     child: Text("CREATE ACCOUNT",
-                        style: TextStyle(color: Colors.white, fontSize: 16)),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: ksmallFontSize)),
                     textColor: Colors.white,
                   ),
                 ],
@@ -91,23 +97,26 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
             )));
   }
 
-  // TODO display what kind of error occured during registration
+  void createScaffold(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(backgroundColor: Colors.red, content: Text(text)));
+  }
+
   void registerWithEmailAndPassword() async {
-    final User user = (await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(
-                email: emailController.text, password: passwordController.text)
-            .catchError((e) {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ShelterDetailsScreen()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "weak-password") {
+        createScaffold("The provided password is too weak.");
+      } else if (e.code == "email-already-in-user") {
+        createScaffold("The account already exists for that email.");
+      }
+    } catch (e) {
       print(e);
-    }))
-        .user;
-    if (user != null) {
-      setState(() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ShelterDetailsScreen(),
-                settings: RouteSettings(arguments: emailController.text)));
-      });
     }
   }
 }

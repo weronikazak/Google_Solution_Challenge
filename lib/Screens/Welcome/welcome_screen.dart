@@ -17,46 +17,36 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          // Image
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            "HOW ARE YOU DOING?",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: kPrimaryColor,
+                fontSize: klargeFontSize,
+                fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              "An app to help hundreds of people in just one click. Be a part of something great?",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
+            ),
+          ),
+          SizedBox(
+            height: 60,
+          ),
           Image.asset(
             "assets/images/tochange_1.png",
             height: 250,
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "Hello!",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "Help thousands of people just in one click!",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-          SizedBox(height: 20),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-            child: MaterialButton(
-              onPressed: () {
-                // Navigator.pushNamed(context, "/login");
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-              elevation: 0,
-              height: buttonHeight,
-              color: kPrimaryColor,
-              minWidth: double.maxFinite,
-              child: Text("LOGIN",
-                  style: TextStyle(color: Colors.white, fontSize: 16)),
-              textColor: Colors.white,
-            ),
-          ),
-
+          SizedBox(height: 40),
           Container(
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             child: MaterialButton(
@@ -69,10 +59,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               },
               elevation: 0,
               height: buttonHeight,
+              color: kPrimaryColor,
+              minWidth: double.maxFinite,
+              child:
+                  Text("REGISTER", style: TextStyle(fontSize: ksmallFontSize)),
+              textColor: Colors.white,
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            child: MaterialButton(
+              onPressed: () {
+                // Navigator.pushNamed(context, "/login");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
+              elevation: 0,
+              height: buttonHeight,
               color: Colors.grey,
               minWidth: double.maxFinite,
-              child: Text("REGISTER",
-                  style: TextStyle(color: Colors.white, fontSize: 16)),
+              child: Text("LOGIN",
+                  style:
+                      TextStyle(color: Colors.white, fontSize: ksmallFontSize)),
               textColor: Colors.white,
             ),
           ),

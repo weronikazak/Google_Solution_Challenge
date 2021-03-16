@@ -17,8 +17,8 @@ class UserMainScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: kPrimaryColor),
-          title: Text("Go back"),
           foregroundColor: kPrimaryColor,
+          
           backgroundColor: Colors.white,
           elevation: 0,
           actions: <Widget>[

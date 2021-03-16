@@ -38,7 +38,8 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("Add more details",
-                      style: TextStyle(fontSize: 30, color: kPrimaryColor),
+                      style: TextStyle(
+                          fontSize: klargeFontSize, color: kPrimaryColor),
                       textAlign: TextAlign.left),
                   SizedBox(height: 20),
                   Row(
@@ -143,7 +144,8 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                     color: kPrimaryColor,
                     minWidth: double.maxFinite,
                     child: Text("CREATE ACCOUNT",
-                        style: TextStyle(color: Colors.white, fontSize: 16)),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: ksmallFontSize)),
                     textColor: Colors.white,
                   ),
                 ],

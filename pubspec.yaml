@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+
   # firebase stuff
   # firebase_analytics: ^5.0.2
 
@@ -66,6 +67,12 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+
+  fonts:
+    - family: Nunito     
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito-Bold.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

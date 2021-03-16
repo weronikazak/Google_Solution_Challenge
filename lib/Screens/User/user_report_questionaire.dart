@@ -25,46 +25,23 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
           ),
           Text(
             "Tell us more",
-            style: TextStyle(color: kPrimaryColor, fontSize: 40),
+            style: TextStyle(color: kPrimaryColor, fontSize: klargeFontSize),
             textAlign: TextAlign.center,
           ),
           Text(
             "Just to make sure you're helping right person or getting rid of duplicated reports smth smth smth",
-            style: TextStyle(color: Colors.grey, fontSize: 24),
+            style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
           ),
           SizedBox(
             height: 40,
-          ),
-          Text("AGE:"),
-          CheckboxListTile(
-            title: Text("Elderly"),
-            value: false,
-            onChanged: (val) {},
-          ),
-          CheckboxListTile(
-            title: Text("Adult"),
-            value: false,
-            onChanged: (val) {},
-          ),
-          CheckboxListTile(
-            title: Text("Young"),
-            value: false,
-            onChanged: (val) {},
-          ),
-          CheckboxListTile(
-            title: Text("Not sure"),
-            value: false,
-            onChanged: (val) {},
-          ),
-          SizedBox(
-            height: 20,
           ),
           SingleChildScrollView(
             child: Column(
               children: [
                 Text("AGE:",
                     textAlign: TextAlign.left,
-                    style: TextStyle(color: kPrimaryColor, fontSize: 20)),
+                    style: TextStyle(
+                        color: kPrimaryColor, fontSize: ksmallFontSize)),
                 CheckboxListTile(
                   title: Text("Old"),
                   value: false,
@@ -91,7 +68,8 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
                 Text(
                   "SEX:",
                   textAlign: TextAlign.left,
-                  style: TextStyle(color: kPrimaryColor, fontSize: 20),
+                  style:
+                      TextStyle(color: kPrimaryColor, fontSize: ksmallFontSize),
                 ),
                 CheckboxListTile(
                   title: Text("Man"),
@@ -118,7 +96,8 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
                   color: kPrimaryColor,
                   minWidth: double.maxFinite,
                   child: Text("SEND REPORT",
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
+                      style: TextStyle(
+                          color: Colors.white, fontSize: ksmallFontSize)),
                   textColor: Colors.white,
                 ),
               ],

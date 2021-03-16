@@ -36,9 +36,9 @@ class AuthService {
     await FirebaseAuth.instance.signInWithCredential(authCreds);
   }
 
-  signInWithOTP(smsCode, verID) {
-    AuthCredential authCreds =
-        PhoneAuthProvider.credential(verificationId: verID, smsCode: smsCode);
-    signIn(authCreds);
-  }
+  // signInWithOTP(smsCode, verID) {
+  //   AuthCredential authCreds =
+  //       PhoneAuthProvider.credential(verificationId: verID, smsCode: smsCode);
+  //   signIn(authCreds);
+  // }
 }

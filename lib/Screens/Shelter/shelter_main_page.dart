@@ -4,7 +4,6 @@ import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
-import 'arguments.dart';
 
 class ShelterMainPage extends StatelessWidget {
   const ShelterMainPage({Key key}) : super(key: key);
@@ -17,7 +16,6 @@ class ShelterMainPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: kPrimaryColor),
-          title: Text("Go back"),
           foregroundColor: kPrimaryColor,
           backgroundColor: Colors.white,
           elevation: 0,
@@ -59,7 +57,8 @@ class ShelterMainPage extends StatelessWidget {
                   ),
                   Text(
                     "Organisation's name",
-                    style: TextStyle(color: kPrimaryColor, fontSize: 30),
+                    style: TextStyle(
+                        color: kPrimaryColor, fontSize: klargeFontSize),
                   ),
                 ],
               ),
