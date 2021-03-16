@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Services/auth.dart';
-import 'package:gsc_project/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,9 +30,9 @@ class MyApp extends StatelessWidget {
       routes: {"/shelterMain": (context) => ShelterMainPage()},
       title: 'Kind-Hearted',
       theme: ThemeData(
-          fontFamily: "Nunito",
-          primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white),
+        // fontFamily: "Nunito",
+        fontFamily: 'Fjalla One',
+      ),
       debugShowMaterialGrid: false,
       home: AuthService().handleAuth(),
     );

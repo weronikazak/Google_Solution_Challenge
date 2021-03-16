@@ -181,15 +181,17 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
         MaterialPageRoute(
             builder: (context) => ShelterMainPage(),
             settings: RouteSettings(
-                arguments: ArgsSettings(nameController.text, image))),
+                arguments:
+                    ArgsSettings(nameController.text, Image.file(image)))),
         ModalRoute.withName("/shelterMain"));
   }
 
+  final picker = ImagePicker();
   Future getImages() async {
-    var galleryImg = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var galleryImg = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      image = galleryImg;
+      image = File(galleryImg.path);
     });
   }
 }
