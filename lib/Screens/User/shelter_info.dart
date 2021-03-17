@@ -26,6 +26,7 @@ class ShelterInfo extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data = snapshot.data.data();
             var display = data['description'];
+            var shelter = data['name'];
 
             return Scaffold(
                 body: Column(
@@ -40,7 +41,7 @@ class ShelterInfo extends StatelessWidget {
                     child: Container(
                         child: Column(children: [
                       Center(
-                          child: Text("Charity Name",
+                          child: Text(shelter,
                               style: TextStyle(
                                   color: Colors.black, fontSize: 40))),
                       Padding(
@@ -54,12 +55,15 @@ class ShelterInfo extends StatelessWidget {
                                 color: Colors.white10,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
-                            child: Text(display,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 20,
-                                )),
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Text(display,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  )),
+                            ),
                           ))
                     ]))),
                 Padding(
@@ -79,7 +83,9 @@ class ShelterInfo extends StatelessWidget {
               ],
             ));
           } else {
-            return Center(child: Text("Loading..."));
+            return Center(
+                child:
+                    Text("Loading...", style: TextStyle(color: kPrimaryColor)));
           }
         });
   }
