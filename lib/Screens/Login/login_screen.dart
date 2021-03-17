@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Screens/User/donate.dart';
+import 'package:gsc_project/Screens/User/user_main_screen.dart';
 
 import '../../constants.dart';
 
@@ -116,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
       });
       Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) => ShelterMainPage()));
+          builder: (BuildContext context) => UserMainScreen()));
     } catch (e) {
       if (e.code == "user-bot-found") {
         createScaffold("No user found for that email.");
@@ -127,7 +128,6 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
-
 
   void loginWithPhoneNumber() async {
     try {

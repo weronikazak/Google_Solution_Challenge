@@ -79,7 +79,9 @@ class Donate extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ShelterInfo()),
+                                    builder: (context) => ShelterInfo(
+                                          shelterId: shelter.id,
+                                        )),
                               );
                             },
                             child: Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Screens/User/donate.dart';
 import 'package:gsc_project/Screens/User/user_report_map.dart';
 import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 import 'package:gsc_project/Services/auth.dart';
@@ -18,7 +19,6 @@ class UserMainScreen extends StatelessWidget {
         appBar: AppBar(
           iconTheme: IconThemeData(color: kPrimaryColor),
           foregroundColor: kPrimaryColor,
-          
           backgroundColor: Colors.white,
           elevation: 0,
           actions: <Widget>[
@@ -44,7 +44,10 @@ class UserMainScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Donate()));
+                },
                 fillColor: kPrimaryColor,
                 padding: EdgeInsets.all(padding),
                 shape: CircleBorder(),
