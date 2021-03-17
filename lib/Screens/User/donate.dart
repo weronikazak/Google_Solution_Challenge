@@ -14,12 +14,49 @@ class Donate extends StatefulWidget {
 }
 
 class _Donate extends State<Donate> {
+  bool _initialized = false;
+  bool _error = false;
+
+  @override
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // CollectionReference shelters =
-    //     FirebaseFirestore.instance.collection('shelters');
-    // shelters.get();
-    // print(shelters);
+    if (_error) {
+      return Scaffold(body: Text("Something went wrong"));
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      return Scaffold(body: Text("Loading"));
+    }
+    FirebaseFirestore.instance
+        .collection('shelters')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                print(doc["name"]);
+              })
+            });
     List<int> s = [1, 2, 3, 4, 5, 6];
 
     return Scaffold(
