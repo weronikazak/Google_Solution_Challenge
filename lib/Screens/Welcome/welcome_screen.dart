@@ -34,7 +34,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: Text(
-              "An app to help hundreds of people in just one click. Be a part of something great?",
+              "An app to help hundreds of people in just one click. Be a part of something great? Idk",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
             ),

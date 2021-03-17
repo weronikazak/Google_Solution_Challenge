@@ -110,17 +110,24 @@ class _LoginPageState extends State<LoginPage> {
   void loginWithEmailAndPassword() async {
     try {
       UserCredential userCreds = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: phoneEmail, password: password);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ShelterMainPage()));
-    } on FirebaseAuthException catch (e) {
+          .signInWithEmailAndPassword(email: phoneEmail, password: password)
+          .catchError((e) {
+        createScaffold(e);
+      });
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) => ShelterMainPage()));
+    } catch (e) {
       if (e.code == "user-bot-found") {
         createScaffold("No user found for that email.");
       } else if (e.code == "wrong-password") {
         createScaffold("Wrong password provided for that user.");
+      } else {
+        createScaffold(e.message);
       }
     }
   }
+
 
   void loginWithPhoneNumber() async {
     try {
@@ -130,11 +137,14 @@ class _LoginPageState extends State<LoginPage> {
               RecaptchaVerifier(
                   container: "recaptcha",
                   size: RecaptchaVerifierSize.compact,
-                  theme: RecaptchaVerifierTheme.dark));
+                  theme: RecaptchaVerifierTheme.dark))
+          .catchError((e) {
+        createScaffold(e);
+      });
 
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Donate()));
-    } on FirebaseAuthException catch (e) {
+    } catch (e) {
       createScaffold("Failed to login. Details: ${e.message}");
     }
   }

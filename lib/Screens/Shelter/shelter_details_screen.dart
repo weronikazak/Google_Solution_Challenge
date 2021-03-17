@@ -46,13 +46,13 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       CircleAvatar(
-                        radius: 70,
+                        radius: 65,
                         backgroundColor: kPrimaryColor,
                         child: (image != null)
                             ? ClipOval(
                                 child: SizedBox(
-                                  width: 90,
-                                  height: 90,
+                                  width: 100,
+                                  height: 100,
                                   child: Image.file(
                                     image,
                                     fit: BoxFit.fill,
@@ -61,8 +61,8 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                               )
                             : ClipRect(
                                 child: SizedBox(
-                                  width: 90,
-                                  height: 90,
+                                  width: 100,
+                                  height: 100,
                                   child: Image.asset(
                                     "assets/icons/house.png",
                                     fit: BoxFit.fill,
@@ -160,7 +160,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
       "city": cityController.text,
       "street": streetController.text,
       "postcode": postcodeController.text,
-      "image": "¯\_(ツ)_/¯ working on it"
+      "image": "¯\\_(ツ)_/¯ working on it"
     });
 
     // String fileName = basename(image.path);
@@ -172,7 +172,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
 
     setState(() {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Profile uploaded succesfully!")));
+          SnackBar(content: Text("Profile created succesfully!")));
     });
 
     print("IMAGE " + image.toString());

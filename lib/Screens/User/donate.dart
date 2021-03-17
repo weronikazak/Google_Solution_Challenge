@@ -6,116 +6,93 @@ import 'package:gsc_project/Screens/User/shelter_info.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-class Donate extends StatefulWidget {
-  Donate({Key key}) : super(key: key);
-
-  @override
-  _Donate createState() => _Donate();
-}
-
-class _Donate extends State<Donate> {
-  bool _initialized = false;
-  bool _error = false;
-
-  @override
-  void initializeFlutterFire() async {
-    try {
-      // Wait for Firebase to initialize and set `_initialized` state to true
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      // Set `_error` state to true if Firebase initialization fails
-      setState(() {
-        _error = true;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
-  }
-
+class Donate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (_error) {
-      return Scaffold(body: Text("Something went wrong"));
-    }
+    CollectionReference shelters =
+        FirebaseFirestore.instance.collection('shelters');
 
-    // Show a loader until FlutterFire is initialized
-    if (!_initialized) {
-      return Scaffold(body: Text("Loading"));
-    }
-    FirebaseFirestore.instance
-        .collection('shelters')
-        .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((doc) {
-                print(doc["name"]);
-              })
-            });
-    List<int> s = [1, 2, 3, 4, 5, 6];
+    return StreamBuilder<QuerySnapshot>(
+        stream: shelters.snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                  child: Text(
+                "Something went horribly wrong and we don't know what.",
+                style: TextStyle(color: Colors.red),
+              )),
+            );
+          }
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Center(
-              child: Text(
-            'HOMELESS CHARITIES',
-          )),
-          backgroundColor: kPrimaryColor,
-        ),
-        body: Column(
-          children: <Widget>[
-            for (var i in s)
-              Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black45,
-                      ),
-                      color: Colors.white10,
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(10.0, 0, 20.0, 0),
-                        child: Icon(
-                          Icons.house,
-                          color: kPrimaryColor,
-                          size: 30.0,
-                        )),
-                    Text(
-                      "Name Of Charity",
-                      overflow: TextOverflow.ellipsis,
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Scaffold(
+              body: Center(
+                  child: Text("Loading",
                       style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 40.0),
-                      child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(kPrimaryColor),
-                            elevation: MaterialStateProperty.all(5.0),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ShelterInfo()),
-                            );
-                          },
-                          child: Text(
-                            "More Info...",
-                            style: TextStyle(color: Colors.black, fontSize: 18),
+                          color: kPrimaryColor, fontSize: kmediumFontSize))),
+            );
+          }
+
+          return Scaffold(
+            appBar: AppBar(
+              title: Center(
+                child: Text("HOMELESS CHARITIES"),
+              ),
+              backgroundColor: kPrimaryColor,
+            ),
+            body: ListView(
+              children: snapshot.data.docs.map((DocumentSnapshot shelter) {
+                return new Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black45,
+                        ),
+                        color: Colors.white10,
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    padding: const EdgeInsets.all(20),
+                    child: Row(children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 0, 20.0, 0),
+                          child: Icon(
+                            Icons.house,
+                            color: kPrimaryColor,
+                            size: 30.0,
                           )),
-                    )
-                  ])),
-          ],
-        ));
+                      Text(
+                        shelter.data()["name"],
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: ksmallFontSize,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 40.0),
+                        child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  kPrimaryColor),
+                              elevation: MaterialStateProperty.all(5.0),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ShelterInfo()),
+                              );
+                            },
+                            child: Text(
+                              "More Info...",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: ksmallFontSize),
+                            )),
+                      )
+                    ]));
+              }).toList(),
+            ),
+          );
+        });
   }
 }

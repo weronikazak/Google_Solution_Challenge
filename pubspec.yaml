@@ -76,7 +76,7 @@ flutter:
         - asset: assets/fonts/Nunito-Bold.ttf
     - family: Fjalla One
       fonts:
-        - asset: fonts/FjallaOne-Regular.ttf
+        - asset: assets/fonts/FjallaOne-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

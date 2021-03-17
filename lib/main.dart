@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Services/auth.dart';
 
+import 'Screens/Login/login_screen.dart';
+import 'Screens/Register/profile_type_screen.dart';
+import 'Screens/Register/shelter_register_screen.dart';
+import 'Screens/Register/user_register_screen.dart';
+import 'Screens/Shelter/shelter_details_screen.dart';
+import 'Screens/User/user_main_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -27,7 +34,6 @@ class MyApp extends StatelessWidget {
       //   "/shelterMain": (context) => ShelterMainPage(),
       //   "/userMain": (context) => UserMainScreen()
       // },
-      routes: {"/shelterMain": (context) => ShelterMainPage()},
       title: 'Kind-Hearted',
       theme: ThemeData(
         // fontFamily: "Nunito",
