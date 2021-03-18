@@ -15,10 +15,6 @@ class NormalUserRegister extends StatefulWidget {
 class _NormalUserRegisterState extends State<NormalUserRegister> {
   final formKey = new GlobalKey<FormState>();
 
-  // TODO Retrive user's phone number, so it will be easier
-  // to register
-  // final SmsAutoFill _autoFill = SmsAutoFill();
-  // final _retrievedNumber = new TextEditingController(text: await _autoFill.hint);
   TextEditingController phoneController = new TextEditingController(text: "");
   String phoneNumber = "";
   String verificationID, smsCode;

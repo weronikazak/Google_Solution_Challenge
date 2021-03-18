@@ -3,8 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants.dart';
-import 'package:gsc_project/Screens/User/donate.dart';
-import '../../constants.dart';
 
 class ShelterInfo extends StatefulWidget {
   ShelterInfo({Key key}) : super(key: key);

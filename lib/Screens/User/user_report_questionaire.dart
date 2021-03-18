@@ -35,74 +35,94 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
           SizedBox(
             height: 40,
           ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Text("AGE:",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: kPrimaryColor, fontSize: ksmallFontSize)),
-                CheckboxListTile(
-                  title: Text("Old"),
-                  value: false,
-                  onChanged: (val) {},
-                ),
-                CheckboxListTile(
-                  title: Text("Adult"),
-                  value: false,
-                  onChanged: (val) {},
-                ),
-                CheckboxListTile(
-                  title: Text("Young"),
-                  value: false,
-                  onChanged: (val) {},
-                ),
-                CheckboxListTile(
-                  title: Text("Not sure"),
-                  value: false,
-                  onChanged: (val) {},
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "SEX:",
+          Column(
+            children: [
+              Text("AGE:",
                   textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: kPrimaryColor, fontSize: ksmallFontSize)),
+              CheckboxListTile(
+                title: Text("Elder"),
+                value: false,
+                onChanged: (val) {
+                  age = "elder";
+                },
+              ),
+              CheckboxListTile(
+                title: Text("Adult"),
+                value: false,
+                onChanged: (val) {
+                  age = "adult";
+                },
+              ),
+              CheckboxListTile(
+                title: Text("Young"),
+                value: false,
+                onChanged: (val) {
+                  age = "young";
+                },
+              ),
+              CheckboxListTile(
+                title: Text("Not sure"),
+                value: false,
+                onChanged: (val) {
+                  age = "not sure";
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "SEX:",
+                textAlign: TextAlign.left,
+                style:
+                    TextStyle(color: kPrimaryColor, fontSize: ksmallFontSize),
+              ),
+              CheckboxListTile(
+                title: Text("Man"),
+                value: false,
+                onChanged: (val) {
+                  sex = "man";
+                },
+              ),
+              CheckboxListTile(
+                title: Text("Woman"),
+                value: false,
+                onChanged: (val) {
+                  sex = "woman";
+                },
+              ),
+              CheckboxListTile(
+                title: Text("Not sure"),
+                value: false,
+                onChanged: (val) {
+                  sex = "not sure";
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Add additional information.",
                   style:
                       TextStyle(color: kPrimaryColor, fontSize: ksmallFontSize),
                 ),
-                CheckboxListTile(
-                  title: Text("Man"),
-                  value: false,
-                  onChanged: (val) {},
-                ),
-                CheckboxListTile(
-                  title: Text("Woman"),
-                  value: false,
-                  onChanged: (val) {},
-                ),
-                CheckboxListTile(
-                  title: Text("Not sure"),
-                  value: false,
-                  onChanged: (val) {},
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                MaterialButton(
-                  onPressed: () {},
-                  elevation: 0,
-                  height: 50,
-                  color: kPrimaryColor,
-                  minWidth: double.maxFinite,
-                  child: Text("SEND REPORT",
-                      style: TextStyle(
-                          color: Colors.white, fontSize: ksmallFontSize)),
-                  textColor: Colors.white,
-                ),
-              ],
-            ),
-          )
+              ),
+              MaterialButton(
+                onPressed: () {},
+                elevation: 0,
+                height: 50,
+                color: kPrimaryColor,
+                minWidth: double.maxFinite,
+                child: Text("SEND REPORT",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: ksmallFontSize)),
+                textColor: Colors.white,
+              ),
+            ],
+          ),
         ],
       ),
     ));
