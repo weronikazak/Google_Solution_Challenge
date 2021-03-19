@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,8 +9,11 @@ import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../constants.dart';
+import 'package:http/http.dart' as http;
 
 class ShelterDetailsScreen extends StatefulWidget {
+  ShelterDetailsScreen(this.email);
+  String email;
   @override
   ShelterDetailsScreenState createState() => ShelterDetailsScreenState();
 }
@@ -18,6 +22,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
   File image;
   String email;
   bool imageUploaded = false;
+  bool postCodeValidated = false;
 
   final formKey = new GlobalKey<FormState>();
   final TextEditingController postcodeController = new TextEditingController();
@@ -27,7 +32,8 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    email = ModalRoute.of(context).settings.arguments;
+    final email = widget.email;
+    var globalSearch;
 
     return Scaffold(
         body: Container(
@@ -103,30 +109,8 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                     },
                   ),
                   TextFormField(
-                    controller: cityController,
-                    decoration: InputDecoration(labelText: "Your city"),
-                    validator: (String val) {
-                      if (val.isEmpty) {
-                        return "This field cannot be empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: streetController,
-                    decoration: InputDecoration(labelText: "Street number"),
-                    validator: (String val) {
-                      if (val.isEmpty) {
-                        return "This field cannot be empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
                     controller: postcodeController,
-                    decoration: InputDecoration(
-                        labelText:
-                            "Post Code? Seriously guys, I don't know how this section should look like angry emoji"),
+                    decoration: InputDecoration(labelText: "Post Code"),
                     validator: (String val) {
                       if (val.isEmpty) {
                         return "This field cannot be empty";
@@ -134,10 +118,39 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                       return null;
                     },
                   ),
+                  postCodeValidated
+                      ? ListView(
+                          children: [
+                            TextFormField(
+                              controller: cityController,
+                              decoration:
+                                  InputDecoration(labelText: "Your city"),
+                              validator: (String val) {
+                                if (val.isEmpty) {
+                                  return "This field cannot be empty";
+                                }
+                                return null;
+                              },
+                            ),
+                            TextFormField(
+                              controller: streetController,
+                              decoration:
+                                  InputDecoration(labelText: "Street number"),
+                              validator: (String val) {
+                                if (val.isEmpty) {
+                                  return "This field cannot be empty";
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        )
+                      : Container(),
                   SizedBox(height: 40),
                   MaterialButton(
                     onPressed: () {
-                      addToDatabase(context);
+                      // addToDatabase(context);
+                      // check if the address is correct
                     },
                     elevation: 0,
                     height: 50,
@@ -194,4 +207,18 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
       image = File(galleryImg.path);
     });
   }
+
+  // Future<String> checkThePostCode() async {
+  //   final response =
+  //       await http.get('https://api.postcodes.io/postcodes/$postcode');
+  //   if (response.statusCode != 200) {
+  //     var map = ErrorMessage.fromJson(json.decode(response.body));
+  //     // postcodeValidator = map.error;
+  //     postCodeValidated = true;
+  //     return map.error;
+  //   }
+  //   return null;
+  // }
+
+  void checkPostCode(postcode) {}
 }

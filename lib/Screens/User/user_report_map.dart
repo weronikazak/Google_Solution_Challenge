@@ -17,6 +17,7 @@ class _UserReportMapState extends State<UserReportMap> {
   Location location = Location();
 
   LatLng _center = const LatLng(52.76510085541201, -1.2320534015136977);
+  LatLng userLocation = null;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -61,7 +62,8 @@ class _UserReportMapState extends State<UserReportMap> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => UserReportQuestionare()));
+                            builder: (context) =>
+                                UserReportQuestionare(userLocation)));
                   },
                   fillColor: kPrimaryColor,
                   shape: CircleBorder(),
@@ -83,6 +85,7 @@ class _UserReportMapState extends State<UserReportMap> {
       final lat = currentLocation.latitude;
       final lng = currentLocation.longitude;
       final center = LatLng(lat, lng);
+      userLocation = center;
       return center;
     } on Exception {
       currentLocation = null;

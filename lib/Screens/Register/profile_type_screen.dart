@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Register/shelter_register_screen.dart';
 import 'package:gsc_project/Screens/Register/user_register_screen.dart';
+import 'package:gsc_project/Screens/Register/user_register_screen_email.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
 import 'package:gsc_project/constants.dart';
 
@@ -53,7 +54,8 @@ class ProfileTypeScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserMainScreen()));
+                                  builder: (context) =>
+                                      UserRegisterPageEmail()));
                         },
                         fillColor: kSecondaryColor,
                         padding: EdgeInsets.all(padding),

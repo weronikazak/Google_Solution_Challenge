@@ -1,24 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../constants.dart';
 
 class UserReportQuestionare extends StatefulWidget {
-  UserReportQuestionare({Key key}) : super(key: key);
+  UserReportQuestionare(this.userLocation);
 
+  LatLng userLocation;
+// const LatLng(52.76510085541201, -1.2320534015136977);
   @override
   _UserReportQuestionareState createState() => _UserReportQuestionareState();
 }
 
 class _UserReportQuestionareState extends State<UserReportQuestionare> {
-  String age, sex;
+  var age, sex;
+  bool showDescription = false;
+  TextEditingController extraInfoController;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
       padding: EdgeInsets.all(20),
-      child: Column(
+      child: ListView(
         children: <Widget>[
           SizedBox(
             height: 20,
@@ -33,85 +39,169 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
             style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
           ),
           SizedBox(
-            height: 40,
+            height: 20,
           ),
           Column(
             children: [
-              Text("AGE:",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      color: kPrimaryColor, fontSize: ksmallFontSize)),
-              CheckboxListTile(
+              Center(
+                child: Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(10),
+                  color: kPrimaryColor,
+                  child: Text(
+                    "AGE",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: ksmallFontSize),
+                  ),
+                ),
+              ),
+              RadioListTile(
+                value: "elder",
+                groupValue: age,
                 title: Text("Elder"),
-                value: false,
                 onChanged: (val) {
-                  age = "elder";
+                  setState(() {
+                    age = val;
+                  });
                 },
+                activeColor: Colors.blue,
+                selected: false,
               ),
-              CheckboxListTile(
+              RadioListTile(
+                value: "adult",
+                groupValue: age,
                 title: Text("Adult"),
-                value: false,
                 onChanged: (val) {
-                  age = "adult";
+                  setState(() {
+                    age = val;
+                  });
                 },
+                activeColor: Colors.blue,
+                selected: false,
               ),
-              CheckboxListTile(
+              RadioListTile(
+                value: "young",
+                groupValue: age,
                 title: Text("Young"),
-                value: false,
                 onChanged: (val) {
-                  age = "young";
+                  setState(() {
+                    age = val;
+                  });
                 },
+                activeColor: Colors.blue,
+                selected: false,
               ),
-              CheckboxListTile(
+              RadioListTile(
+                value: "not sure",
+                groupValue: age,
                 title: Text("Not sure"),
-                value: false,
                 onChanged: (val) {
-                  age = "not sure";
+                  setState(() {
+                    age = val;
+                  });
                 },
+                activeColor: Colors.blue,
+                selected: false,
               ),
+              Center(
+                child: Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(10),
+                  color: kPrimaryColor,
+                  child: Text(
+                    "SEX",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: ksmallFontSize),
+                  ),
+                ),
+              ),
+              RadioListTile(
+                value: "man",
+                groupValue: sex,
+                title: Text("Man"),
+                onChanged: (val) {
+                  setState(() {
+                    sex = val;
+                  });
+                },
+                activeColor: Colors.blue,
+                selected: false,
+              ),
+              RadioListTile(
+                value: "woman",
+                groupValue: sex,
+                title: Text("Woman"),
+                onChanged: (val) {
+                  setState(() {
+                    sex = val;
+                  });
+                },
+                activeColor: Colors.blue,
+                selected: false,
+              ),
+              RadioListTile(
+                value: "not sure",
+                groupValue: sex,
+                title: Text("Not sure"),
+                onChanged: (val) {
+                  setState(() {
+                    sex = val;
+                  });
+                },
+                activeColor: Colors.blue,
+                selected: false,
+              ),
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      showDescription = !showDescription;
+                    });
+                  },
+                  child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          showDescription
+                              ? Icon(Icons.remove_circle, color: kPrimaryColor)
+                              : Icon(Icons.add_circle, color: kPrimaryColor),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Add additional information.",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: kPrimaryColor, fontSize: ksmallFontSize),
+                          ),
+                        ],
+                      ))),
+              // Text(widget.userLocation.latitude.toString()),
+              showDescription
+                  ? TextField(
+                      // textAlign: TextAlign.left,
+                      // expands: true,
+                      // style: TextStyle(height: 5),
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      controller: extraInfoController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 2),
+                          ),
+                          hintText: 'Add some information about the person.'),
+                    )
+                  : Container(),
               SizedBox(
                 height: 20,
               ),
-              Text(
-                "SEX:",
-                textAlign: TextAlign.left,
-                style:
-                    TextStyle(color: kPrimaryColor, fontSize: ksmallFontSize),
-              ),
-              CheckboxListTile(
-                title: Text("Man"),
-                value: false,
-                onChanged: (val) {
-                  sex = "man";
-                },
-              ),
-              CheckboxListTile(
-                title: Text("Woman"),
-                value: false,
-                onChanged: (val) {
-                  sex = "woman";
-                },
-              ),
-              CheckboxListTile(
-                title: Text("Not sure"),
-                value: false,
-                onChanged: (val) {
-                  sex = "not sure";
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Add additional information.",
-                  style:
-                      TextStyle(color: kPrimaryColor, fontSize: ksmallFontSize),
-                ),
-              ),
               MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  addToDatabase(context);
+                  // Navigator.push(context, route))
+                },
                 elevation: 0,
                 height: 50,
                 color: kPrimaryColor,
@@ -126,5 +216,15 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
         ],
       ),
     ));
+  }
+
+  Future addToDatabase(BuildContext context) async {
+    FirebaseFirestore.instance.collection("raports").add({
+      "latitude": widget.userLocation.latitude,
+      "longitude": widget.userLocation.longitude,
+      "age": age,
+      "sex": sex,
+      "info": extraInfoController.text,
+    });
   }
 }

@@ -141,12 +141,9 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
     // CODE SENT
     final PhoneCodeSent smsSent = (String verID, [int resendToken]) async {
       this.verificationID = verID;
-      setState(() {
-        this.codeSent = true;
-      });
-      PhoneAuthCredential phoneAuthCredential =
-          PhoneAuthProvider.credential(verificationId: verID, smsCode: smsCode);
-      await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Please check your phone for the verification code.')));
     };
 
     // CODE RENEVAL

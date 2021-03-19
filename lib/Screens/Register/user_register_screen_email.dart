@@ -1,21 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gsc_project/Screens/Login/login_screen.dart';
-import 'package:gsc_project/Screens/Shelter/shelter_details_screen.dart';
-import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
-import 'package:gsc_project/Services/auth.dart';
+import 'package:gsc_project/Screens/User/user_main_screen.dart';
 
 import '../../constants.dart';
 
-class ShelterRegisterScreen extends StatefulWidget {
+class UserRegisterPageEmail extends StatefulWidget {
   @override
-  _ShelterRegisterScreenState createState() => _ShelterRegisterScreenState();
+  _UserRegisterPageEmailState createState() => _UserRegisterPageEmailState();
 }
 
-class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
+class _UserRegisterPageEmailState extends State<UserRegisterPageEmail> {
   final formKey = new GlobalKey<FormState>();
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
@@ -108,10 +104,7 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
           .createUserWithEmailAndPassword(
               email: emailController.text, password: passwordController.text);
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  ShelterDetailsScreen(emailController.text)));
+          context, MaterialPageRoute(builder: (context) => UserMainScreen()));
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
         createScaffold("The provided password is too weak.");
