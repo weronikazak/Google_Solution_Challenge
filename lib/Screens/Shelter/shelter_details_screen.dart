@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Classes/shelter.dart';
 import 'package:gsc_project/Screens/Shelter/arguments.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:image_picker/image_picker.dart';
@@ -208,17 +209,18 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
     });
   }
 
-  // Future<String> checkThePostCode() async {
-  //   final response =
-  //       await http.get('https://api.postcodes.io/postcodes/$postcode');
-  //   if (response.statusCode != 200) {
-  //     var map = ErrorMessage.fromJson(json.decode(response.body));
-  //     // postcodeValidator = map.error;
-  //     postCodeValidated = true;
-  //     return map.error;
-  //   }
-  //   return null;
-  // }
+  Future<Shelter> checkThePostCode(String postcode) async {
+    final response = await http
+        .get(Uri.https('https://api.postcodes.io/postcodes', postcode));
+    if (response.statusCode == 200) {
+      var map = Shelter.fromJson(json.decode(response.body));
+      return map;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red, content: Text('Incorrect postcode.')));
+      return null;
+    }
+  }
 
   void checkPostCode(postcode) {}
 }

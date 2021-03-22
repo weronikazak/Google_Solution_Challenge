@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
+
 class Shelter {
   String city;
-  String email;
-  String image;
-  String name;
   String postcode;
   String street;
 
   Shelter(
-      this.city, this.email, this.image, this.name, this.street, this.postcode);
+      {@required this.city, @required this.street, @required this.postcode});
+
+  factory Shelter.fromJson(Map<String, dynamic> json) {
+    return Shelter(
+        city: json["city"], street: json["street"], postcode: json["postcode"]);
+  }
 }

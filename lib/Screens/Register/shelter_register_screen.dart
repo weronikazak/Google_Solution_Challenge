@@ -115,7 +115,7 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
         createScaffold("The provided password is too weak.");
-      } else if (e.code == "email-already-in-user") {
+      } else if (e.code == "email-already-in-use") {
         createScaffold("The account already exists for that email.");
       }
     } catch (e) {

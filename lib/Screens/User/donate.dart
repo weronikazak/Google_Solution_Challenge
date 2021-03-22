@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants.dart';
 import 'package:gsc_project/Screens/User/shelter_info.dart';
 
-FirebaseFirestore firestore = FirebaseFirestore.instance;
-
 class Donate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
