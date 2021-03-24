@@ -1,69 +1,116 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-void main() => runApp(ShelterReportMap());
+import '../../constants.dart';
 
-class ShelterReportMap extends StatefulWidget {
-  @override
-  _ShelterReportMapState createState() => _ShelterReportMapState();
-}
+class ShelterReportMap extends StatelessWidget {
+  String raportId;
+  String shelterId;
 
-class _ShelterReportMapState extends State<ShelterReportMap> {
+  ShelterReportMap({Key key, @required this.raportId, @required this.shelterId})
+      : super(key: key);
+  CollectionReference raports =
+      FirebaseFirestore.instance.collection('raports');
+
   GoogleMapController mapController;
   Location location = Location();
 
-  LatLng _center = const LatLng(52.76510085541201, -1.2320534015136977);
-
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    location.onLocationChanged.listen((event) {
-      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(event.latitude, event.longitude), zoom: 20)));
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      children: [
-        GoogleMap(
-          myLocationEnabled: true,
-          myLocationButtonEnabled: true,
-          mapType: MapType.normal,
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 20.0,
-          ),
-        ),
-        Container(
-            alignment: Alignment.bottomCenter,
-            margin: EdgeInsets.only(bottom: 50),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
+    return FutureBuilder<DocumentSnapshot>(
+        future: raports.doc(raportId).get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                  child: Text(
+                "Something went horribly wrong and we don't know what.",
+                style: TextStyle(color: Colors.red),
+              )),
+            );
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data = snapshot.data.data();
+            double lat = (data['lat']).toDouble();
+            double lon = (data['lon']).toDouble();
+            LatLng target = new LatLng(lat, lon);
+
+            Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
+            // TODO change pins' colour
+            Marker markerTarget =
+                new Marker(markerId: MarkerId("1"), position: target);
+            Marker yourPosition = new Marker(
+                markerId: MarkerId("2"),
+                position: LatLng(52.76510085541201, -1.2320534015136977));
+
+            markers[MarkerId("1")] = markerTarget;
+            markers[MarkerId("2")] = yourPosition;
+
+            return Scaffold(
+                body: Stack(
               children: [
-                Container(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.check_circle,
-                        color: Colors.blue,
-                      ),
-                      Icon(
-                        Icons.cancel,
-                        color: Colors.red,
-                      )
-                    ],
+                GoogleMap(
+                  // myLocationEnabled: true,
+                  // myLocationButtonEnabled: true,
+                  mapType: MapType.normal,
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: target,
+                    zoom: 16.0,
                   ),
-                  width: double.infinity,
-                  height: 40,
-                )
+                  markers: Set<Marker>.of(markers.values),
+                ),
+                Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Icon(
+                                  Icons.check_circle,
+                                  color: Colors.blue,
+                                  size: 70,
+                                ),
+                              ),
+                              Expanded(
+                                child: Icon(
+                                  Icons.cancel,
+                                  color: Colors.red,
+                                  size: 70,
+                                ),
+                              )
+                            ],
+                          ),
+                          width: double.infinity,
+                          height: 100,
+                        )
+                      ],
+                    )),
               ],
-            )),
-      ],
-    ));
+            ));
+          } else {
+            return Scaffold(
+              body: Center(
+                  child: Text("Loading",
+                      style: TextStyle(
+                          color: kPrimaryColor, fontSize: kmediumFontSize))),
+            );
+          }
+        });
   }
 
   Future<LatLng> getUserLocation() async {

@@ -24,8 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  google_maps_flutter: ^0.5.30
-  google_map_location_picker: ^3.3.4
+  # google_maps_flutter: ^0.5.30
+  # google_map_location_picker: ^3.3.4
   # firebase stuff
   # firebase_analytics: ^5.0.2
 

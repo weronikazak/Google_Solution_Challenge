@@ -18,7 +18,7 @@ class AuthService {
             // print("SNAPSHOT SNAPSHOT 3" + snapshot.data.user);
 
             if (snapshot.data.email.toString() != "") {
-              return ShelterMainPage();
+              return ShelterMainPage(shelterId: snapshot.data["id"]);
             } else {
               return UserMainScreen();
             }

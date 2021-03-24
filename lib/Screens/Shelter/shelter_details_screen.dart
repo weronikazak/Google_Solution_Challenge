@@ -210,9 +210,11 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
   }
 
   Future<Shelter> checkThePostCode(String postcode) async {
-    final response = await http
-        .get(Uri.https('https://api.postcodes.io/postcodes', postcode));
+    postcode = postcode.replaceAll(" ", "").toLowerCase();
+    final response = await http.get(Uri.https("https://api.getAddress.io/find",
+        "$postcode?api-key=5ChLN7u9NkKJoEBMbiQIbA30704&expand=true"));
     if (response.statusCode == 200) {
+      print("!!!!!RESPONSE " + response.toString());
       var map = Shelter.fromJson(json.decode(response.body));
       return map;
     } else {
