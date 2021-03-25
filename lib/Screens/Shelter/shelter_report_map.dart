@@ -80,19 +80,24 @@ class ShelterReportMap extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Icon(
-                                  Icons.check_circle,
-                                  color: Colors.blue,
-                                  size: 70,
+                                child: RawMaterialButton(
+                                  onPressed: () {},
+                                  child: Icon(
+                                    Icons.check_circle,
+                                    color: Colors.blue,
+                                    size: 70,
+                                  ),
                                 ),
                               ),
                               Expanded(
+                                  child: RawMaterialButton(
+                                onPressed: () {},
                                 child: Icon(
                                   Icons.cancel,
                                   color: Colors.red,
                                   size: 70,
                                 ),
-                              )
+                              ))
                             ],
                           ),
                           width: double.infinity,

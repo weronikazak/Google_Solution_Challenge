@@ -17,96 +17,92 @@ class ProfileTypeScreen extends StatelessWidget {
 
     return Scaffold(
         // TODO: Title like: Choose your account type?
-        body: Container(
-            alignment: Alignment.topCenter,
-            padding: EdgeInsets.all(20),
-            child: ListView(
-              children: [
-                SizedBox(height: 20),
-                Container(
-                  child: Text(
-                    "CHOOSE TYPE",
-                    style: TextStyle(
-                        fontSize: klargeFontSize,
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
+        body: Center(
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          Container(
+            child: Text(
+              "CHOOSE TYPE",
+              style: TextStyle(
+                  fontSize: klargeFontSize,
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 20),
+          //   child: Text(
+          //     "Some way longer text here because this page looks so awkward and empty.",
+          //     textAlign: TextAlign.center,
+          //     style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
+          //   ),
+          // ),
+          SizedBox(
+            height: 40,
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RawMaterialButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserRegisterPageEmail()));
+                  },
+                  fillColor: kSecondaryColor,
+                  padding: EdgeInsets.all(padding),
+                  shape: CircleBorder(),
+                  child:
+                      Image.asset("assets/icons/user_1.png", height: imageSize),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    "Some way longer text here because this page looks so awkward and empty.",
-                    textAlign: TextAlign.center,
-                    style:
-                        TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
-                  ),
+                Text(
+                  "normal user",
+                  style:
+                      TextStyle(color: Colors.grey, fontSize: kmediumFontSize),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 60,
                 ),
-                Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      RawMaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      UserRegisterPageEmail()));
-                        },
-                        fillColor: kSecondaryColor,
-                        padding: EdgeInsets.all(padding),
-                        shape: CircleBorder(),
-                        child: Image.asset("assets/icons/user_1.png",
-                            height: imageSize),
-                      ),
-                      Text(
-                        "normal user",
-                        style: TextStyle(
-                            color: Colors.grey, fontSize: kmediumFontSize),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      RawMaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ShelterRegisterScreen()));
-                        },
-                        fillColor: kSecondaryColor,
-                        padding: EdgeInsets.all(padding),
-                        shape: CircleBorder(),
-                        child: Image.asset("assets/icons/shelter.png",
-                            height: imageSize),
-                      ),
-                      Text(
-                        "shelter",
-                        style: TextStyle(
-                            color: Colors.grey, fontSize: kmediumFontSize),
-                      ),
-                      // SUSPENDED COFFEE THING
-                      // good thing it's flexible
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      // RawMaterialButton(
-                      //   onPressed: () {},
-                      //   fillColor: kPrimaryColor,
-                      //   padding: EdgeInsets.all(padding),
-                      //   shape: CircleBorder(),
-                      //   child:
-                      //       Image.asset("assets/icons/coffee.png", height: imageSize),
-                      // ),
-                    ],
-                  ),
-                )
+                RawMaterialButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ShelterRegisterScreen()));
+                  },
+                  fillColor: kSecondaryColor,
+                  padding: EdgeInsets.all(padding),
+                  shape: CircleBorder(),
+                  child: Image.asset("assets/icons/shelter.png",
+                      height: imageSize),
+                ),
+                Text(
+                  "shelter",
+                  style:
+                      TextStyle(color: Colors.grey, fontSize: kmediumFontSize),
+                ),
+                // SUSPENDED COFFEE THING
+                // good thing it's flexible
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // RawMaterialButton(
+                //   onPressed: () {},
+                //   fillColor: kPrimaryColor,
+                //   padding: EdgeInsets.all(padding),
+                //   shape: CircleBorder(),
+                //   child:
+                //       Image.asset("assets/icons/coffee.png", height: imageSize),
+                // ),
               ],
-            )));
+            ),
+          )
+        ],
+      ),
+    ));
   }
 }
