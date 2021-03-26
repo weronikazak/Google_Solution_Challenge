@@ -1,22 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Register/shelter_register_screen.dart';
-import 'package:gsc_project/Screens/Register/user_register_screen.dart';
 import 'package:gsc_project/Screens/Register/user_register_screen_email.dart';
-import 'package:gsc_project/Screens/User/user_main_screen.dart';
 import 'package:gsc_project/constants.dart';
 
 class ProfileTypeScreen extends StatelessWidget {
-  // const ProfileTypeScreen({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     double padding = 20;
     double imageSize = 90;
-    double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        // TODO: Title like: Choose your account type?
         body: Center(
       child: ListView(
         shrinkWrap: true,

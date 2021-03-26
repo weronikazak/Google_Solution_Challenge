@@ -1,12 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gsc_project/Screens/Login/login_screen.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_details_screen.dart';
-import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
-import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
 
@@ -78,7 +73,6 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
                   SizedBox(height: 40),
                   MaterialButton(
                     onPressed: () {
-                      // TO CHANGE; TODO
                       if (formKey.currentState.validate()) {
                         registerWithEmailAndPassword();
                       }

@@ -14,57 +14,60 @@ class UserThankYou extends StatefulWidget {
 class _UserThankYouState extends State<UserThankYou> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        body: Column(children: [
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "THANK YOU!",
+    return Scaffold(
+        body: Center(
+      child: ListView(shrinkWrap: true, children: [
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          "THANK YOU!",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: kPrimaryColor,
+              fontSize: klargeFontSize,
+              fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Text(
+            "Thank you for helping. We will take a look at that report and convey it to the nearest shelter.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-                color: kPrimaryColor,
-                fontSize: klargeFontSize,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: Text(
-              "Thank you for helping. We will take a look at that report and convey it to the nearest shelter.",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
-            ),
-          ),
-          SizedBox(
-            height: 60,
-          ),
-          Image.asset(
+        ),
+        SizedBox(
+          height: 60,
+        ),
+        CircleAvatar(
+          radius: 120,
+          backgroundColor: kskyColor,
+          child: Image.asset(
             "assets/images/help.png",
             height: 250,
           ),
-          SizedBox(height: 40),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-            child: MaterialButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => UserMainScreen()));
-              },
-              elevation: 0,
-              height: 60,
-              color: kPrimaryColor,
-              minWidth: double.maxFinite,
-              child:
-                  Text("REGISTER", style: TextStyle(fontSize: ksmallFontSize)),
-              textColor: Colors.white,
-            ),
+        ),
+        SizedBox(height: 40),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          child: MaterialButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserMainScreen()));
+            },
+            elevation: 0,
+            height: 60,
+            color: kPrimaryColor,
+            minWidth: double.maxFinite,
+            child: Text("BACK TO MAIN",
+                style: TextStyle(fontSize: ksmallFontSize)),
+            textColor: Colors.white,
           ),
-        ]),
-      ),
-    );
+        ),
+      ]),
+    ));
   }
 }

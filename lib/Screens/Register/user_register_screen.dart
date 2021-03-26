@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
-import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-// import 'package:sms_autofill/sms_autofill.dart';
 
 class NormalUserRegister extends StatefulWidget {
   @override

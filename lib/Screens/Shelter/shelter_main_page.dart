@@ -31,7 +31,7 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
       shelterName = value.data()["name"];
       shelterLon = value.data()["longitude"];
       shelterLat = value.data()["latitude"];
-      print("AAAAAA " + shelterLat.toString());
+      // print("AAAAAA " + shelterLat.toString());
     }).catchError((error) => print("Error again :("));
   }
 

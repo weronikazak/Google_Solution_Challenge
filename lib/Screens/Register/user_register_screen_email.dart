@@ -74,10 +74,6 @@ class _UserRegisterPageEmailState extends State<UserRegisterPageEmail> {
                   SizedBox(height: 40),
                   MaterialButton(
                     onPressed: () {
-                      // TO CHANGE; TODO
-                      // if (formKey.currentState.validate()) {
-                      //   registerWithEmailAndPassword();
-                      // }
                       Navigator.push(
                           context,
                           MaterialPageRoute(

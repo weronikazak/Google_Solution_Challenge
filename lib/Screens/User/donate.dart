@@ -43,30 +43,41 @@ class Donate extends StatelessWidget {
               children: snapshot.data.docs.map((DocumentSnapshot shelter) {
                 return new Container(
                     decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black45,
-                        ),
-                        color: Colors.white10,
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                      border: Border.all(
+                        color: Colors.black45,
+                      ),
+                      color: Colors.white10,
+                      // borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
                     padding: const EdgeInsets.all(20),
                     child: Row(children: <Widget>[
                       Padding(
-                          padding: EdgeInsets.fromLTRB(10.0, 0, 20.0, 0),
-                          child: Icon(
-                            Icons.house,
-                            color: kPrimaryColor,
-                            size: 40.0,
-                          )),
+                        padding: EdgeInsets.fromLTRB(10.0, 0, 20.0, 0),
+                        child: CircleAvatar(
+                            radius: 20,
+                            foregroundColor: Colors.white,
+                            backgroundColor: kSecondaryColor,
+                            child: Icon(Icons.house)),
+                      ),
                       SizedBox(
                         width: 150,
-                        child: Center(
-                          child: Text(shelter.data()["name"],
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold)),
-                        ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(shelter.data()["name"],
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: kmediumFontSize,
+                                      fontWeight: FontWeight.bold)),
+                              Text(
+                                  shelter.data()["city"] +
+                                      ", " +
+                                      shelter.data()["street"],
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: ksmallFontSize)),
+                            ]),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 40.0),
@@ -74,7 +85,7 @@ class Donate extends StatelessWidget {
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   kPrimaryColor),
-                              elevation: MaterialStateProperty.all(5.0),
+                              elevation: MaterialStateProperty.all(0),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -86,7 +97,7 @@ class Donate extends StatelessWidget {
                               );
                             },
                             child: Text(
-                              "More Info...",
+                              "More Info",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: ksmallFontSize),

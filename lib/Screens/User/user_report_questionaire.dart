@@ -3,18 +3,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gsc_project/Screens/User/user_thankyou.dart';
-import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 
 import '../../constants.dart';
 
 class UserReportQuestionare extends StatefulWidget {
+  LatLng userLocation;
   UserReportQuestionare(this.userLocation);
 
-  LatLng userLocation;
 // const LatLng(52.76510085541201, -1.2320534015136977);
   @override
   _UserReportQuestionareState createState() => _UserReportQuestionareState();
 }
+
+@override
+void initState() {}
 
 class _UserReportQuestionareState extends State<UserReportQuestionare> {
   var age, sex;
@@ -37,7 +39,8 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
             textAlign: TextAlign.center,
           ),
           Text(
-            "Just to make sure you're helping right person or getting rid of duplicated reports smth smth smth",
+            "Please fill the questionnaire below to make sure you're helping right person or getting rid of duplicated reports.",
+            textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
           ),
           SizedBox(
