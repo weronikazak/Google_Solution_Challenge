@@ -55,15 +55,18 @@ class Donate extends StatelessWidget {
                           child: Icon(
                             Icons.house,
                             color: kPrimaryColor,
-                            size: 30.0,
+                            size: 40.0,
                           )),
-                      Text(
-                        shelter.data()["name"],
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: ksmallFontSize,
-                            fontWeight: FontWeight.bold),
+                      SizedBox(
+                        width: 150,
+                        child: Center(
+                          child: Text(shelter.data()["name"],
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold)),
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 40.0),
@@ -77,7 +80,9 @@ class Donate extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ShelterInfo()),
+                                    builder: (context) => ShelterInfo(
+                                          shelterId: shelter.id,
+                                        )),
                               );
                             },
                             child: Text(
