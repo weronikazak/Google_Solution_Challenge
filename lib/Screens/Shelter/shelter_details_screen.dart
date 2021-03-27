@@ -32,6 +32,8 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
   final TextEditingController streetController = new TextEditingController();
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController extraInfoController = new TextEditingController();
+  final TextEditingController websiteController = new TextEditingController();
+  final TextEditingController phoneController = new TextEditingController();
 
   double latitude = 0.0;
   double longitude = 0.0;
@@ -132,6 +134,28 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                             }
                             return null;
                           },
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: phoneController,
+                          decoration:
+                              InputDecoration(labelText: "Phone number"),
+                          validator: (String val) {
+                            if (val.isEmpty) {
+                              return "This field cannot be empty";
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          controller: websiteController,
+                          decoration: InputDecoration(labelText: "Website"),
+                          // validator: (String val) {
+                          //   if (val.isEmpty) {
+                          //     return "This field cannot be empty";
+                          //   }
+                          //   return null;
+                          // },
                         ),
                         postCodeValidated
                             ? Column(
@@ -235,8 +259,10 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
       "city": cityController.text,
       "street": streetController.text,
       "postcode": postcodeController.text,
-      "image": "¯\\_(ツ)_/¯ working on it",
+      "image": "N/A",
       "description": extraInfoController.text,
+      "website": websiteController.text,
+      "phone_number": phoneController.text,
       "latitude": latitude,
       "longitude": longitude
     }).then((value) => this.shelterKey = value.id);
@@ -285,7 +311,6 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
 
     if (response.statusCode == 200) {
       Shelter shelter = Shelter.fromJson(jsonDecode(response.body));
-      print("!!!!!RESPONSE " + jsonDecode(response.body).toString());
 
       setState(() {
         this.longitude = shelter.longitude;
@@ -293,7 +318,6 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
         this.city = shelter.city;
         this.cityController.text = shelter.city;
       });
-      print(longitude.toString() + " " + latitude.toString() + " " + city);
       return shelter;
     } else {
       setState(() {
@@ -304,8 +328,6 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
       return null;
     }
   }
-
-  void checkPostCode(postcode) {}
 }
 
 class UpperCaseTextFormatter extends TextInputFormatter {

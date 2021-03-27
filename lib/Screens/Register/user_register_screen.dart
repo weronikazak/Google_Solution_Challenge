@@ -17,6 +17,8 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
   String phoneNumber = "";
   String verificationID, smsCode;
 
+  bool phoneFilled = false;
+
   bool codeSent = false;
   SmsAutoFill smsAutoFill = SmsAutoFill();
 
@@ -62,6 +64,7 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                             onChanged: (code) {
                               setState(() {
                                 this.smsCode = code;
+                                // phoneFilled = true;
                               });
                             },
                           ))
@@ -69,11 +72,12 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                   SizedBox(
                     height: 20,
                   ),
-                  (phoneController.text == "")
+                  (!phoneFilled)
                       ? MaterialButton(
                           onPressed: () async => {
                             this.phoneNumber = await smsAutoFill.hint,
-                            this.phoneController.text = this.phoneNumber
+                            this.phoneController.text = this.phoneNumber,
+                            phoneFilled = true
                           },
                           elevation: 0,
                           height: 50,

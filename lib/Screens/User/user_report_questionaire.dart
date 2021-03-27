@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -182,7 +183,6 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
                           ),
                         ],
                       ))),
-              // Text(widget.userLocation.latitude.toString()),
               showDescription
                   ? TextField(
                       // textAlign: TextAlign.left,
@@ -205,8 +205,6 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
               MaterialButton(
                 onPressed: () {
                   addToDatabase(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserThankYou()));
                 },
                 elevation: 0,
                 height: 50,
@@ -225,12 +223,14 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
   }
 
   Future addToDatabase(BuildContext context) async {
-    FirebaseFirestore.instance.collection("raports").add({
+    await FirebaseFirestore.instance.collection("raports").add({
       "latitude": widget.userLocation.latitude,
       "longitude": widget.userLocation.longitude,
       "age": age,
       "sex": sex,
-      "info": extraInfoController.text,
-    });
+      "description": extraInfoController.text,
+      "number": FirebaseAuth.instance.currentUser.phoneNumber
+    }).then((value) => Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UserThankYou())));
   }
 }

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Register/profile_type_screen.dart';
 import 'package:gsc_project/Screens/Login/login_screen.dart';
+import 'package:gsc_project/Services/auth.dart';
 import 'package:gsc_project/constants.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -10,6 +12,14 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   double buttonHeight = 60;
+
+  @override
+  void initState() {
+    super.initState();
+    if (FirebaseAuth.instance.currentUser != null) {
+      AuthService().signOut();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +44,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: Text(
-              "An app to help hundreds of people in just one click. Be a part of something great? Idk",
+              "An app to help hundreds of people in just one click. Be a part of something great.",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
             ),
@@ -52,10 +62,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: MaterialButton(
               onPressed: () {
                 // Navigator.pushNamed(context, "/registrationType");
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProfileTypeScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileTypePage()));
               },
               elevation: 0,
               height: buttonHeight,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -5,7 +7,7 @@ import 'package:location/location.dart';
 
 import '../../constants.dart';
 
-class ShelterReportMap extends StatelessWidget {
+class ShelterReportMap extends StatefulWidget {
   String raportId;
   String shelterId;
 
@@ -14,17 +16,81 @@ class ShelterReportMap extends StatelessWidget {
   CollectionReference raports =
       FirebaseFirestore.instance.collection('raports');
 
-  GoogleMapController mapController;
-  Location location = Location();
+  @override
+  _ShelterReportMapState createState() => _ShelterReportMapState();
+}
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+class _ShelterReportMapState extends State<ShelterReportMap> {
+  Completer<GoogleMapController> mapController = Completer();
+  Set<Marker> _markers = Set<Marker>();
+
+  Location location = Location();
+  BitmapDescriptor sourceIcon;
+
+  // coords of lboro
+  LatLng currentLocation = const LatLng(52.76510085541201, -1.2320534015136977);
+
+  void showPinsOnMap() {
+    var pinPosition =
+        LatLng(currentLocation.latitude, currentLocation.longitude);
+
+    _markers.add(Marker(
+        markerId: MarkerId('sourcePin'),
+        position: pinPosition,
+        icon: sourceIcon));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    location = new Location();
+    location.onLocationChanged.listen((LocationData loc) {
+      currentLocation = new LatLng(loc.latitude, loc.longitude);
+      // updatePinOnMap();
+    });
+
+    setMarkerIcons();
+    setInitialLocation();
+  }
+
+  void setInitialLocation() async {
+    var loc = await location.getLocation();
+    currentLocation = new LatLng(loc.latitude, loc.longitude);
+    updatePinOnMap();
+  }
+
+  void setMarkerIcons() async {
+    sourceIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/icons/marker_yellow.png');
+  }
+
+  void updatePinOnMap() async {
+    CameraPosition camPos = CameraPosition(
+      target: currentLocation,
+      zoom: 20.0,
+    );
+    final GoogleMapController controller = await mapController.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(camPos));
+
+    if (mounted) {
+      setState(() {
+        var pinPosition =
+            LatLng(currentLocation.latitude, currentLocation.longitude);
+
+        _markers.removeWhere((m) => m.markerId.value == "sourcePin");
+        _markers.add(Marker(
+            markerId: MarkerId("sourcePin"),
+            position: pinPosition,
+            icon: sourceIcon));
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
-        future: raports.doc(raportId).get(),
+        future: widget.raports.doc(widget.raportId).get(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -56,56 +122,69 @@ class ShelterReportMap extends StatelessWidget {
             markers[MarkerId("2")] = yourPosition;
 
             return Scaffold(
-                body: Stack(
-              children: [
-                GoogleMap(
-                  // myLocationEnabled: true,
-                  // myLocationButtonEnabled: true,
-                  mapType: MapType.normal,
-                  onMapCreated: _onMapCreated,
-                  initialCameraPosition: CameraPosition(
-                    target: target,
-                    zoom: 16.0,
+                appBar: AppBar(
+                  title: Center(
+                    child: Text("Some text"),
                   ),
-                  markers: Set<Marker>.of(markers.values),
+                  backgroundColor: kPrimaryColor,
                 ),
-                Container(
-                    alignment: Alignment.bottomCenter,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Container(
-                          color: Colors.white,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: RawMaterialButton(
-                                  onPressed: () {},
-                                  child: Icon(
-                                    Icons.check_circle,
-                                    color: Colors.blue,
-                                    size: 70,
+                body: Stack(
+                  children: [
+                    GoogleMap(
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: true,
+                      mapType: MapType.normal,
+                      onMapCreated: (GoogleMapController controller) {
+                        mapController.complete(controller);
+                        showPinsOnMap();
+                      },
+                      markers: _markers,
+                      onLongPress: (loc) {
+                        currentLocation = loc;
+                        updatePinOnMap();
+                      },
+                      initialCameraPosition: CameraPosition(
+                        target: currentLocation,
+                        zoom: 20.0,
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.bottomCenter,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Container(
+                              color: Colors.white,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: RawMaterialButton(
+                                      onPressed: () {},
+                                      child: Icon(
+                                        Icons.check_circle,
+                                        color: Colors.blue,
+                                        size: 70,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Expanded(
+                                      child: RawMaterialButton(
+                                    onPressed: () {},
+                                    child: Icon(
+                                      Icons.cancel,
+                                      color: Colors.red,
+                                      size: 70,
+                                    ),
+                                  ))
+                                ],
                               ),
-                              Expanded(
-                                  child: RawMaterialButton(
-                                onPressed: () {},
-                                child: Icon(
-                                  Icons.cancel,
-                                  color: Colors.red,
-                                  size: 70,
-                                ),
-                              ))
-                            ],
-                          ),
-                          width: double.infinity,
-                          height: 100,
-                        )
-                      ],
-                    )),
-              ],
-            ));
+                              width: double.infinity,
+                              height: 100,
+                            )
+                          ],
+                        )),
+                  ],
+                ));
           } else {
             return Scaffold(
               body: Center(
@@ -115,20 +194,5 @@ class ShelterReportMap extends StatelessWidget {
             );
           }
         });
-  }
-
-  Future<LatLng> getUserLocation() async {
-    LocationData currentLocation;
-    final location = Location();
-    try {
-      currentLocation = await location.getLocation();
-      final lat = currentLocation.latitude;
-      final lng = currentLocation.longitude;
-      final center = LatLng(lat, lng);
-      return center;
-    } on Exception {
-      currentLocation = null;
-      return null;
-    }
   }
 }

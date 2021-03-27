@@ -34,7 +34,7 @@ class _ShelterRegisterScreenState extends State<ShelterRegisterScreen> {
                       textAlign: TextAlign.left),
                   SizedBox(height: 20),
                   Text(
-                    "We need need a little more detail about you in order to keep your account safe?? I don't know, something like that, correct me.",
+                    "We need need a little more detail about you in order to keep your account safe.",
                     style: TextStyle(color: Colors.grey),
                     textAlign: TextAlign.left,
                   ),

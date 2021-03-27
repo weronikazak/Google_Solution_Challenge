@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Screens/User/donate.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
+import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
 
@@ -79,10 +82,10 @@ class _LoginPageState extends State<LoginPage> {
                         if (shelterLogin) {
                           loginWithEmailAndPassword();
                         } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Donate()));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => UserMainScreen()));
 
                           // loginWithPhoneNumber();
                         }
@@ -114,11 +117,23 @@ class _LoginPageState extends State<LoginPage> {
           .catchError((e) {
         createScaffold(e);
       });
-      Navigator.of(context).pop();
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) => UserMainScreen()));
+
+      await instance
+          .collection("shelters")
+          .where("email", isEqualTo: phoneEmail)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          String shelterId = value.docs.first.id;
+
+          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  ShelterMainPage(shelterId: shelterId)));
+        }
+      });
     } catch (e) {
-      if (e.code == "user-bot-found") {
+      if (e.code == "user-not-found") {
         createScaffold("No user found for that email.");
       } else if (e.code == "wrong-password") {
         createScaffold("Wrong password provided for that user.");
