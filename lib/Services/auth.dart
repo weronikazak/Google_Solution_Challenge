@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
 
 class AuthService {
+  // String phoneNumber = "";
   handleAuth() {
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),

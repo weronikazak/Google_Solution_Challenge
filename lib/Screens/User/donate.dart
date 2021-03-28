@@ -51,14 +51,14 @@ class Donate extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.all(20),
                     child: Row(children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10.0, 0, 20.0, 0),
-                        child: CircleAvatar(
-                            radius: 20,
-                            foregroundColor: Colors.white,
-                            backgroundColor: kSecondaryColor,
-                            child: Icon(Icons.house)),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.fromLTRB(10.0, 0, 20.0, 0),
+                      //   child: CircleAvatar(
+                      //       radius: 20,
+                      //       foregroundColor: Colors.white,
+                      //       backgroundColor: kSecondaryColor,
+                      //       child: Icon(Icons.house)),
+                      // ),
                       SizedBox(
                         width: 150,
                         child: Column(
@@ -68,8 +68,7 @@ class Donate extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: kPrimaryColor,
-                                      fontSize: kmediumFontSize,
-                                      fontWeight: FontWeight.bold)),
+                                      fontSize: kmediumFontSize)),
                               Text(
                                   shelter.data()["city"] +
                                       ", " +
@@ -80,29 +79,65 @@ class Donate extends StatelessWidget {
                             ]),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 40.0),
-                        child: TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  kPrimaryColor),
-                              elevation: MaterialStateProperty.all(0),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ShelterInfo(
-                                          shelterId: shelter.id,
-                                        )),
-                              );
-                            },
-                            child: Text(
-                              "More Info",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: ksmallFontSize),
-                            )),
-                      )
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              RawMaterialButton(
+                                elevation: 0,
+                                onPressed: () {},
+                                fillColor: kPrimaryColor,
+                                padding: EdgeInsets.all(15),
+                                shape: CircleBorder(),
+                                child: Icon(Icons.navigation_rounded,
+                                    color: Colors.white),
+                              ),
+                              RawMaterialButton(
+                                elevation: 0,
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ShelterInfo(
+                                                shelterId: shelter.id,
+                                              )));
+                                },
+                                fillColor: kPrimaryColor,
+                                padding: EdgeInsets.all(13),
+                                shape: CircleBorder(),
+                                child: Text(
+                                  "?",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: kmediumFontSize),
+                                ),
+                              ),
+                            ],
+                          )
+
+                          // child: TextButton(
+                          //     style: ButtonStyle(
+                          //       backgroundColor: MaterialStateProperty.all<Color>(
+                          //           kPrimaryColor),
+                          //       elevation: MaterialStateProperty.all(0),
+                          //     ),
+                          //     onPressed: () {
+                          //       Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (context) => ShelterInfo(
+                          //                   shelterId: shelter.id,
+                          //                 )),
+                          //       );
+                          //     },
+                          //     child: Text(
+                          //       "More Info",
+                          //       style: TextStyle(
+                          //           color: Colors.black,
+                          //           fontSize: ksmallFontSize),
+                          //     )),
+                          )
                     ]));
               }).toList(),
             ),

@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gsc_project/Classes/shelter.dart';
-import 'package:gsc_project/Screens/Shelter/arguments.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -14,8 +13,9 @@ import '../../constants.dart';
 import 'package:http/http.dart' as http;
 
 class ShelterDetailsScreen extends StatefulWidget {
-  ShelterDetailsScreen(this.email);
   String email;
+
+  ShelterDetailsScreen(this.email);
   @override
   ShelterDetailsScreenState createState() => ShelterDetailsScreenState();
 }
@@ -205,12 +205,12 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                                   if (formValidator.currentState.validate()) {
                                     addToDatabase(context);
 
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ShelterMainPage(
-                                                    shelterId: shelterKey)));
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             ShelterMainPage(
+                                    //                 shelterId: shelterKey)));
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
@@ -254,7 +254,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
 
   Future addToDatabase(BuildContext context) async {
     FirebaseFirestore.instance.collection("shelters").add({
-      "email": email,
+      "email": widget.email,
       "name": nameController.text,
       "city": cityController.text,
       "street": streetController.text,
@@ -274,21 +274,17 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
     // TaskSnapshot taskSnapshot =
     //     await uploadTask.whenComplete(() => {print("woooo")});
 
-    setState(() {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Profile created succesfully!")));
-    });
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Profile created succesfully!")));
 
-    print("IMAGE " + image.toString());
+    // print("IMAGE " + image.toString());
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-            builder: (context) => ShelterMainPage(
-                  shelterId: shelterKey,
-                ),
-            settings: RouteSettings(
-                arguments:
-                    ArgsSettings(nameController.text, Image.file(image)))),
+          builder: (context) => ShelterMainPage(
+            shelterId: shelterKey,
+          ),
+        ),
         ModalRoute.withName("/shelterMain"));
   }
 

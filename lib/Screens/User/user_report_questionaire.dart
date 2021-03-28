@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,6 +22,8 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
   var age, sex;
   bool showDescription = false;
   TextEditingController extraInfoController = new TextEditingController();
+  // TODO
+  var phoneNumber = "";
 
   @override
   Widget build(BuildContext context) {
@@ -233,9 +234,8 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
       "description":
           extraInfoController.text == null ? "" : extraInfoController.text,
       "time": DateTime.now(),
-      "number": "whatever"
+      "number": phoneNumber
     });
-    print("AAAAAAAAAAA " + FirebaseAuth.instance.currentUser.toString());
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => UserThankYou()));
   }

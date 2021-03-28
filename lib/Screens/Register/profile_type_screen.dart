@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Register/shelter_register_screen.dart';
 import 'package:gsc_project/Screens/Register/user_register_screen.dart';
-import 'package:gsc_project/Screens/Register/user_register_screen_email.dart';
 import 'package:gsc_project/constants.dart';
 
 class ProfileTypePage extends StatefulWidget {

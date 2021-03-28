@@ -137,8 +137,8 @@ class _ShelterReportMapState extends State<ShelterReportMap> {
 
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data = snapshot.data.data();
-            var lat = (data['lat']).toDouble();
-            var lon = (data['lon']).toDouble();
+            var lat = (data['latitude']).toDouble();
+            var lon = (data['longitude']).toDouble();
             destinationLocation = LatLng(lat, lon);
 
             return Scaffold(

@@ -116,6 +116,7 @@ class _UserReportMapState extends State<UserReportMap> {
                   alignment: Alignment.bottomCenter,
                   children: [
                     RawMaterialButton(
+                      elevation: 0,
                       child:
                           Image.asset("assets/icons/homeless.png", height: 50),
                       // child: Text("REPORT"),
@@ -134,7 +135,7 @@ class _UserReportMapState extends State<UserReportMap> {
                                 builder: (context) =>
                                     UserReportQuestionare(currentLocation)));
                       },
-                      fillColor: kPrimaryColor,
+                      fillColor: kSecondaryColor,
                       shape: CircleBorder(),
                     ),
                     SizedBox(

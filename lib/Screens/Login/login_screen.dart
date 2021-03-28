@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
-import 'package:gsc_project/Screens/User/donate.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
-import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
 
@@ -78,16 +75,11 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 40),
                   MaterialButton(
                     onPressed: () {
-                      if (formKey.currentState.validate()) {
+                      if (phoneEmail != "" && formKey.currentState.validate()) {
                         if (shelterLogin) {
                           loginWithEmailAndPassword();
                         } else {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => UserMainScreen()));
-
-                          // loginWithPhoneNumber();
+                          loginWithPhoneNumber();
                         }
                       }
                     },
@@ -138,28 +130,31 @@ class _LoginPageState extends State<LoginPage> {
       // } else if (e.code == "wrong-password") {
       //   createScaffold("Wrong password provided for that user.");
       // } else {
-      createScaffold(e.message);
+      createScaffold(e);
       // }
     }
   }
 
   void loginWithPhoneNumber() async {
     try {
-      ConfirmationResult confirmationResult = await FirebaseAuth.instance
-          .signInWithPhoneNumber(
-              phoneEmail,
-              RecaptchaVerifier(
-                  container: "recaptcha",
-                  size: RecaptchaVerifierSize.compact,
-                  theme: RecaptchaVerifierTheme.dark))
-          .catchError((e) {
+      await instance
+          .collection("users")
+          .where("phonenumber", isEqualTo: phoneEmail)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          var pn = value.docs.first.data()["phonenumber"];
+          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => UserMainScreen()));
+        } else {
+          createScaffold("Such user doesn't exist.");
+        }
+      }).catchError((e) {
         createScaffold(e);
       });
-
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Donate()));
     } catch (e) {
-      createScaffold("Failed to login. Details: ${e.message}");
+      createScaffold("Failed to login. Details: ${e}");
     }
   }
 }

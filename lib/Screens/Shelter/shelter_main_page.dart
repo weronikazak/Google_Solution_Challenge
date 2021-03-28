@@ -37,7 +37,7 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
       shelterAddress = value.data()['city'] + ", " + value.data()['street'];
     }).catchError((error) => print("Error again :("));
 
-    // distanceController.text = "100";
+    distanceController.text = "5";
   }
 
   @override
@@ -46,14 +46,18 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
         instance.collection('raports').orderBy("time", descending: true);
 
     double calculateDistance(lat1, lon1, lat2, lon2) {
-      var p = 0.017453292519943295;
-      var c = cos;
-      double a = 0.5 -
-          c((lat2 - lat1) * p) / 2 +
-          c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-      double result = 12742 * asin(sqrt(a));
+      try {
+        var p = 0.017453292519943295;
+        var c = cos;
+        double a = 0.5 -
+            c((lat2 - lat1) * p) / 2 +
+            c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+        double result = 12742 * asin(sqrt(a));
 
-      return num.parse(result.toStringAsFixed(2));
+        return num.parse(result.toStringAsFixed(2));
+      } catch (e) {
+        return 0;
+      }
     }
 
     return StreamBuilder<QuerySnapshot>(
@@ -157,25 +161,36 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(2),
-                color: Colors.grey,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: distanceController,
-                  textAlign: TextAlign.right,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white24,
-                    focusColor: Colors.black,
-                    hoverColor: Colors.black,
-                    hintText: "Distance from target (in km)",
-                    suffixIcon: Icon(Icons.explore, color: Colors.black),
+              new Row(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    width: 300,
+                    color: Colors.grey,
+                    child: Text(
+                      "Distance from target (in km)",
+                      style: TextStyle(
+                          color: Colors.black, fontSize: ksmallFontSize),
+                    ),
                   ),
-                ),
+                  new Flexible(
+                    child: new TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: distanceController,
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white24,
+                        focusColor: Colors.black,
+                        hoverColor: Colors.black,
+                        suffixIcon: Icon(Icons.explore, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Expanded(
                   child: Container(
-                child: ListView(
+                child: Column(
                   children: snapshot.data.docs.map((DocumentSnapshot raport) {
                     return Container(
                         decoration: BoxDecoration(
@@ -185,19 +200,6 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
                         ),
                         padding: const EdgeInsets.all(20),
                         child: Row(children: <Widget>[
-                          // Padding(
-                          //   padding: EdgeInsets.only(
-                          //       left: 10, bottom: 10, top: 10, right: 20),
-                          //   child: CircleAvatar(
-                          //       radius: 25,
-                          //       backgroundColor: Colors.red,
-                          //       child: Text(
-                          //         "!",
-                          //         style: TextStyle(
-                          //             fontSize: klargeFontSize,
-                          //             color: Colors.white),
-                          //       )),
-                          // ),
                           Expanded(
                               child: Padding(
                             padding: EdgeInsets.only(left: 20),
@@ -206,8 +208,8 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
                               children: [
                                 Text(
                                   calculateDistance(
-                                              raport.data()["lat"],
-                                              raport.data()["lon"],
+                                              raport.data()["latitude"],
+                                              raport.data()["longitude"],
                                               shelterLat,
                                               shelterLon)
                                           .toString() +

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants.dart';
+import 'donate_pay.dart';
 
 class ShelterInfo extends StatelessWidget {
   String shelterId;
@@ -141,7 +142,10 @@ class ShelterInfo extends StatelessWidget {
                           minWidth: double.infinity,
                           elevation: 0,
                           color: kPrimaryColor,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Pay()));
+                          },
                           child: Text("DONATE TO THIS CHARITY",
                               textAlign: TextAlign.center,
                               style: TextStyle(

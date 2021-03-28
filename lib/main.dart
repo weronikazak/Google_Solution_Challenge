@@ -6,8 +6,6 @@ import 'Screens/Login/login_screen.dart';
 import 'Screens/Register/profile_type_screen.dart';
 import 'Screens/Register/shelter_register_screen.dart';
 import 'Screens/Register/user_register_screen.dart';
-import 'Screens/Shelter/shelter_details_screen.dart';
-import 'Screens/Shelter/shelter_main_page.dart';
 import 'Screens/User/user_main_screen.dart';
 
 void main() async {
@@ -34,7 +32,7 @@ class MyApp extends StatelessWidget {
         // "/shelterMain": (context) => ShelterMainPage(),
         "/userMain": (context) => UserMainScreen()
       },
-      title: 'Kind-Hearted',
+      title: 'How are you doing?',
       theme: ThemeData(
         // fontFamily: "Nunito",
         fontFamily: 'Fjalla One',
