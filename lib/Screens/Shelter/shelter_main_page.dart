@@ -37,7 +37,7 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
       shelterAddress = value.data()['city'] + ", " + value.data()['street'];
     }).catchError((error) => print("Error again :("));
 
-    distanceController.text = "5";
+    distanceController.text = "15";
   }
 
   @override
@@ -247,9 +247,12 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ShelterReportMap(
-                                              raportId: raport.id,
-                                              shelterId: widget.shelterId,
-                                            )));
+                                            targetLat:
+                                                raport.data()["latitude"],
+                                            targetLon:
+                                                raport.data()["longitude"],
+                                            shelterLat: shelterLat,
+                                            shelterLon: shelterLon)));
                               },
                               fillColor: kPrimaryColor,
                               padding: EdgeInsets.all(15),
