@@ -232,6 +232,7 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
       "sex": sex,
       "description":
           extraInfoController.text == null ? "" : extraInfoController.text,
+      "time": DateTime.now(),
       "number": "whatever"
     });
     print("AAAAAAAAAAA " + FirebaseAuth.instance.currentUser.toString());
