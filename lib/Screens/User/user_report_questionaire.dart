@@ -22,10 +22,12 @@ void initState() {}
 class _UserReportQuestionareState extends State<UserReportQuestionare> {
   var age, sex;
   bool showDescription = false;
-  TextEditingController extraInfoController;
+  TextEditingController extraInfoController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    extraInfoController.text = "";
+
     return Scaffold(
         body: Container(
       padding: EdgeInsets.all(20),
@@ -228,9 +230,12 @@ class _UserReportQuestionareState extends State<UserReportQuestionare> {
       "longitude": widget.userLocation.longitude,
       "age": age,
       "sex": sex,
-      "description": extraInfoController.text,
-      "number": FirebaseAuth.instance.currentUser.phoneNumber
-    }).then((value) => Navigator.push(
-        context, MaterialPageRoute(builder: (context) => UserThankYou())));
+      "description":
+          extraInfoController.text == null ? "" : extraInfoController.text,
+      "number": "whatever"
+    });
+    print("AAAAAAAAAAA " + FirebaseAuth.instance.currentUser.toString());
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UserThankYou()));
   }
 }

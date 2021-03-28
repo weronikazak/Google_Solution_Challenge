@@ -133,13 +133,13 @@ class _LoginPageState extends State<LoginPage> {
         }
       });
     } catch (e) {
-      if (e.code == "user-not-found") {
-        createScaffold("No user found for that email.");
-      } else if (e.code == "wrong-password") {
-        createScaffold("Wrong password provided for that user.");
-      } else {
-        createScaffold(e.message);
-      }
+      // if (e.code == "user-not-found") {
+      //   createScaffold("No user found for that email.");
+      // } else if (e.code == "wrong-password") {
+      //   createScaffold("Wrong password provided for that user.");
+      // } else {
+      createScaffold(e.message);
+      // }
     }
   }
 

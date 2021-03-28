@@ -91,72 +91,72 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                         )
                       : Container(),
                   SizedBox(height: 20),
-                  MaterialButton(
-                    onPressed: () {
-                      verifyPhone(phoneController.text);
-                      codeSent = true;
-                    },
-                    elevation: 0,
-                    height: 50,
-                    color: kPrimaryColor,
-                    minWidth: double.maxFinite,
-                    child: codeSent
-                        ? Text("SEND OTP CODE",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: ksmallFontSize))
-                        : Text("CREATE ACCOUNT",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: ksmallFontSize)),
-                    textColor: Colors.white,
-                  ),
+                  codeSent
+                      ? MaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserMainScreen()));
+                          },
+                          elevation: 0,
+                          height: 50,
+                          color: kPrimaryColor,
+                          minWidth: double.maxFinite,
+                          child: Text("CREATE ACCOUNT",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ksmallFontSize)),
+                          textColor: Colors.white,
+                        )
+                      : MaterialButton(
+                          onPressed: () {
+                            verifyPhone(phoneController.text);
+                            codeSent = true;
+                          },
+                          elevation: 0,
+                          height: 50,
+                          color: kPrimaryColor,
+                          minWidth: double.maxFinite,
+                          child: Text("SEND OTP CODE",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ksmallFontSize)),
+                          textColor: Colors.white,
+                        ),
                 ],
               ),
             )));
   }
 
   Future<void> verifyPhone(String phoneNumber) async {
-    // COMPLETED
     final PhoneVerificationCompleted verified =
         (PhoneAuthCredential authResult) async {
       await FirebaseAuth.instance.signInWithCredential(authResult);
-
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => UserMainScreen()));
     };
 
-    // FAIL
-    final PhoneVerificationFailed verificationFailed =
-        (FirebaseAuthException e) {
-      if (e.code == "invalid-phone-number") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.red,
-            content: Text('The provided phone number is not valid.')));
-        this.codeSent = false;
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(
-                'Phone number verification failed. Message: ${e.message}')));
-      }
-    };
-
-    // CODE SENT
-    final PhoneCodeSent smsSent = (String verID, [int resendToken]) async {
-      this.verificationID = verID;
-
+    PhoneVerificationFailed verificationFailed =
+        (FirebaseAuthException authException) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Please check your phone for the verification code.')));
+          backgroundColor: Colors.red,
+          content: Text(
+              'Phone number verification failed. Message: ${authException.message}')));
     };
 
-    // CODE RENEVAL
-    final PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verID) {
+    PhoneCodeSent smsSent = (String verID, [int forceResend]) async {
       this.verificationID = verID;
-      // this.codeSent = false;
+      setState(() {
+        this.codeSent = true;
+      });
+    };
+
+    PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verID) {
+      this.verificationID = verID;
     };
 
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phoneController.text,
+        phoneNumber: phoneNumber,
         timeout: const Duration(seconds: 5),
         verificationCompleted: verified,
         verificationFailed: verificationFailed,

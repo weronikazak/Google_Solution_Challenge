@@ -24,14 +24,20 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
   double shelterLon;
   double shelterLat;
   String shelterName = "Name";
+  String shelterAddress = "Address";
+  TextEditingController distanceController = new TextEditingController();
 
   @override
   void initState() {
+    super.initState();
     instance.collection("shelters").doc(widget.shelterId).get().then((value) {
       shelterName = value.data()["name"];
       shelterLon = value.data()["longitude"];
       shelterLat = value.data()["latitude"];
+      shelterAddress = value.data()['city'] + ", " + value.data()['street'];
     }).catchError((error) => print("Error again :("));
+
+    // distanceController.text = "100";
   }
 
   @override
@@ -73,175 +79,215 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
           }
 
           return Scaffold(
-              appBar: AppBar(
-                iconTheme: IconThemeData(color: kPrimaryColor),
-                foregroundColor: kPrimaryColor,
-                backgroundColor: Colors.white,
-                elevation: 0,
-                actions: <Widget>[
-                  Builder(
-                    builder: (BuildContext context) {
-                      return IconButton(
-                          onPressed: () async {
-                            await AuthService().signOut();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WelcomeScreen()));
-                          },
-                          icon: Icon(Icons.logout));
-                    },
-                  ),
-                ],
-              ),
               body: Column(
-                children: <Widget>[
-                  Container(
-                      child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(10),
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor: kPrimaryColor,
-                            child: ClipRect(
-                              child: SizedBox(
-                                width: 65,
-                                height: 65,
-                                child: Image.asset(
-                                  "assets/icons/shelter.png",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
+            children: <Widget>[
+              Container(
+                height: 70,
+                width: double.infinity,
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    IconButton(
+                        icon: Icon(Icons.account_circle, color: kPrimaryColor),
+                        iconSize: 30,
+                        onPressed: () {}),
+                    IconButton(
+                      icon: Icon(
+                        Icons.logout,
+                        color: kPrimaryColor,
+                      ),
+                      iconSize: 30,
+                      onPressed: () async {
+                        await AuthService().signOut();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WelcomeScreen()));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                  child: Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundColor: kPrimaryColor,
+                        child: ClipRect(
+                          child: SizedBox(
+                            width: 65,
+                            height: 65,
+                            child: Image.asset(
+                              "assets/icons/shelter.png",
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
-                        Text(
-                          shelterName,
-                          style: TextStyle(
-                              color: kPrimaryColor, fontSize: klargeFontSize),
-                        ),
-                      ],
-                    ),
-                  )),
-                  Center(
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      padding: EdgeInsets.all(10),
-                      color: kPrimaryColor,
-                      child: Text(
-                        "LATEST RAPORTS",
-                        style: TextStyle(
-                            color: Colors.white, fontSize: ksmallFontSize),
                       ),
                     ),
-                  ),
-                  Expanded(
-                      child: Container(
-                    child: ListView(
-                      children:
-                          snapshot.data.docs.map((DocumentSnapshot raport) {
-                        return new Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: kSecondaryColor,
-                              ),
-                            ),
-                            padding: const EdgeInsets.all(20),
-                            child: Row(children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(10),
-                                child: CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Colors.orange,
-                                    child: Text(
-                                      "!",
-                                      style: TextStyle(
-                                          fontSize: klargeFontSize,
-                                          color: Colors.white),
-                                    )),
-                                // child: Icon(
-                                //   Icons.report_problem,
-                                //   size: 50,
-                                //   color: Colors.orange,
-                                // )
-                                // child: Image.asset(
-                                //   "assets/icons/homeless.png",
-                                //   width: 40,
-                                //   height: 40,
-                                //   color: kPrimaryColor,
-                                //   fit: BoxFit.fill,
-                                // ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      calculateDistance(
-                                                  raport.data()["lat"],
-                                                  raport.data()["lon"],
-                                                  // TO CHANGE
-                                                  shelterLat,
-                                                  shelterLon)
-                                              // 12.0,
-                                              // 12.0)
-                                              .toString() +
-                                          " KM AWAY",
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: ksmallFontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      timeago
-                                          .format(
-                                              raport.data()["time"].toDate())
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: ksmallFontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 40.0),
-                                child: RawMaterialButton(
-                                  elevation: 0,
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ShelterReportMap(
-                                                  raportId: raport.id,
-                                                  shelterId: widget.shelterId,
-                                                )));
-                                  },
-                                  fillColor: kPrimaryColor,
-                                  padding: EdgeInsets.all(15),
-                                  shape: CircleBorder(),
-                                  child: Icon(Icons.arrow_forward_ios,
-                                      color: Colors.white),
-                                ),
-                              )
-                            ]));
-                      }).toList(),
+                    Text(
+                      shelterName,
+                      style: TextStyle(
+                          color: kPrimaryColor, fontSize: klargeFontSize),
                     ),
-                  ))
-                ],
-              ));
+                    Text(
+                      shelterAddress,
+                      style: TextStyle(
+                          color: Colors.grey, fontSize: kmediumFontSize),
+                    ),
+                  ],
+                ),
+              )),
+              Center(
+                child: Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(10),
+                  color: kPrimaryColor,
+                  child: Text(
+                    "LATEST RAPORTS",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: ksmallFontSize),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(2),
+                color: Colors.grey,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: distanceController,
+                  textAlign: TextAlign.right,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white24,
+                    focusColor: Colors.black,
+                    hoverColor: Colors.black,
+                    hintText: "Distance from target (in km)",
+                    suffixIcon: Icon(Icons.explore, color: Colors.black),
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                child: ListView(
+                  children: snapshot.data.docs.map((DocumentSnapshot raport) {
+                    return Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: kSecondaryColor,
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(20),
+                        child: Row(children: <Widget>[
+                          // Padding(
+                          //   padding: EdgeInsets.only(
+                          //       left: 10, bottom: 10, top: 10, right: 20),
+                          //   child: CircleAvatar(
+                          //       radius: 25,
+                          //       backgroundColor: Colors.red,
+                          //       child: Text(
+                          //         "!",
+                          //         style: TextStyle(
+                          //             fontSize: klargeFontSize,
+                          //             color: Colors.white),
+                          //       )),
+                          // ),
+                          Expanded(
+                              child: Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  calculateDistance(
+                                              raport.data()["lat"],
+                                              raport.data()["lon"],
+                                              shelterLat,
+                                              shelterLon)
+                                          .toString() +
+                                      " KM AWAY",
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: ksmallFontSize,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  timeago
+                                      .format(raport.data()["time"].toDate())
+                                      .toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: ksmallFontSize,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                          Padding(
+                            padding: EdgeInsets.only(left: 60.0),
+                            child: RawMaterialButton(
+                              elevation: 0,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ShelterReportMap(
+                                              raportId: raport.id,
+                                              shelterId: widget.shelterId,
+                                            )));
+                              },
+                              fillColor: kPrimaryColor,
+                              padding: EdgeInsets.all(15),
+                              shape: CircleBorder(),
+                              child: Icon(Icons.arrow_forward_ios,
+                                  color: Colors.white),
+                            ),
+                          )
+                          // Padding(
+                          //   padding: EdgeInsets.only(left: 40.0),
+                          //   child: TextButton(
+                          //       style: ButtonStyle(
+                          //         backgroundColor:
+                          //             MaterialStateProperty.all<Color>(
+                          //                 kPrimaryColor),
+                          //         elevation: MaterialStateProperty.all(0),
+                          //       ),
+                          //       onPressed: () {
+                          //         Navigator.push(
+                          //             context,
+                          //             MaterialPageRoute(
+                          //                 builder: (context) =>
+                          //                     ShelterReportMap(
+                          //                       raportId: raport.id,
+                          //                       shelterId: widget.shelterId,
+                          //                     )));
+                          //       },
+                          //       child: Text(
+                          //         "More Info",
+                          //         style: TextStyle(
+                          //             color: Colors.black,
+                          //             fontSize: ksmallFontSize),
+                          //       )),
+                          // )
+                        ]));
+                  }).toList(),
+                ),
+              ))
+            ],
+          ));
         });
   }
 }

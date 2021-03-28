@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -26,18 +27,31 @@ class _ShelterReportMapState extends State<ShelterReportMap> {
 
   Location location = Location();
   BitmapDescriptor sourceIcon;
+  BitmapDescriptor destinationIcon;
+
+  Set<Polyline> _polylines = Set<Polyline>();
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints;
 
   // coords of lboro
   LatLng currentLocation = const LatLng(52.76510085541201, -1.2320534015136977);
+  LatLng destinationLocation = new LatLng(0.0, 0.0);
 
   void showPinsOnMap() {
     var pinPosition =
         LatLng(currentLocation.latitude, currentLocation.longitude);
+    var destPosition =
+        LatLng(destinationLocation.latitude, destinationLocation.longitude);
 
     _markers.add(Marker(
         markerId: MarkerId('sourcePin'),
         position: pinPosition,
         icon: sourceIcon));
+
+    _markers.add(Marker(
+        markerId: MarkerId('destPin'),
+        position: destPosition,
+        icon: destinationIcon));
   }
 
   @override
@@ -56,6 +70,8 @@ class _ShelterReportMapState extends State<ShelterReportMap> {
   void setInitialLocation() async {
     var loc = await location.getLocation();
     currentLocation = new LatLng(loc.latitude, loc.longitude);
+    destinationLocation =
+        new LatLng(destinationLocation.latitude, destinationLocation.longitude);
     updatePinOnMap();
   }
 
@@ -63,6 +79,10 @@ class _ShelterReportMapState extends State<ShelterReportMap> {
     sourceIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
         'assets/icons/marker_yellow.png');
+
+    destinationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/icons/marker_red.png');
   }
 
   void updatePinOnMap() async {
@@ -73,18 +93,30 @@ class _ShelterReportMapState extends State<ShelterReportMap> {
     final GoogleMapController controller = await mapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(camPos));
 
-    if (mounted) {
-      setState(() {
-        var pinPosition =
-            LatLng(currentLocation.latitude, currentLocation.longitude);
+    showPinsOnMap();
+  }
 
-        _markers.removeWhere((m) => m.markerId.value == "sourcePin");
-        _markers.add(Marker(
-            markerId: MarkerId("sourcePin"),
-            position: pinPosition,
-            icon: sourceIcon));
-      });
-    }
+  void setPolylines() async {
+    // var result = await polylinePoints.getRouteBetweenCoordinates(
+    //     "AIzaSyAaIVgOLQXMDc3lloX6VA_JJIlYVSdN8js",
+    //     currentLocation.latitude,
+    //     currentLocation.longitude,
+    //     destinationLocation.latitude,
+    //     destinationLocation.longitude);
+
+    // if (result.isNotEmpty) {
+    //   result.forEach((PointLatLng point) {
+    //     polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+    //   });
+
+    //   setState(() {
+    //     _polylines.add(Polyline(
+    //         width: 5, // set the width of the polylines
+    //         polylineId: PolylineId("poly"),
+    //         color: Color.fromARGB(255, 40, 122, 198),
+    //         points: polylineCoordinates));
+    //   });
+    // }
   }
 
   @override
@@ -105,21 +137,9 @@ class _ShelterReportMapState extends State<ShelterReportMap> {
 
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data = snapshot.data.data();
-            double lat = (data['lat']).toDouble();
-            double lon = (data['lon']).toDouble();
-            LatLng target = new LatLng(lat, lon);
-
-            Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-
-            // TODO change pins' colour
-            Marker markerTarget =
-                new Marker(markerId: MarkerId("1"), position: target);
-            Marker yourPosition = new Marker(
-                markerId: MarkerId("2"),
-                position: LatLng(52.76510085541201, -1.2320534015136977));
-
-            markers[MarkerId("1")] = markerTarget;
-            markers[MarkerId("2")] = yourPosition;
+            var lat = (data['lat']).toDouble();
+            var lon = (data['lon']).toDouble();
+            destinationLocation = LatLng(lat, lon);
 
             return Scaffold(
                 appBar: AppBar(
@@ -134,15 +154,16 @@ class _ShelterReportMapState extends State<ShelterReportMap> {
                       myLocationEnabled: true,
                       myLocationButtonEnabled: true,
                       mapType: MapType.normal,
+                      polylines: _polylines,
                       onMapCreated: (GoogleMapController controller) {
-                        mapController.complete(controller);
-                        showPinsOnMap();
+                        try {
+                          mapController.complete(controller);
+                          showPinsOnMap();
+                        } catch (e) {
+                          showPinsOnMap();
+                        }
                       },
                       markers: _markers,
-                      onLongPress: (loc) {
-                        currentLocation = loc;
-                        updatePinOnMap();
-                      },
                       initialCameraPosition: CameraPosition(
                         target: currentLocation,
                         zoom: 20.0,
