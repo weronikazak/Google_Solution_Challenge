@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../constants.dart';
-import 'donate_pay.dart';
 
 class ShelterInfo extends StatelessWidget {
   String shelterId;
   ShelterInfo({Key key, @required this.shelterId}) : super(key: key);
+
+  bool showDetails = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,80 +34,171 @@ class ShelterInfo extends StatelessWidget {
             return Scaffold(
                 body: Center(
               child: ListView(
-                shrinkWrap: true,
+                padding: EdgeInsets.all(00),
+                // shrinkWrap: true,
                 children: [
                   Container(
+                      // decoration: BoxDecoration(
+                      //   border: Border.all(
+                      //     color: kSecondaryColor,
+                      //   ),
+                      //   borderRadius: BorderRadius.all(Radius.circular(10)),
+                      //   color: Colors.white10,
+                      // ),
+                      color: kSecondaryColor,
                       child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: CircleAvatar(
-                          radius: 70,
-                          backgroundColor: kskyColor,
-                          child: ClipRect(
-                            child: SizedBox(
-                              width: 90,
-                              height: 90,
-                              child: Image.asset(
-                                "assets/icons/shelter.png",
-                                fit: BoxFit.fill,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: CircleAvatar(
+                              radius: 70,
+                              backgroundColor: Colors.white,
+                              child: ClipRect(
+                                child: SizedBox(
+                                  width: 90,
+                                  height: 90,
+                                  child: Image.asset(
+                                    "assets/icons/shelter.png",
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      Text(
-                        data['name'],
-                        style: TextStyle(
-                            color: kPrimaryColor, fontSize: klargeFontSize),
-                      ),
-                      Text(
-                        data['city'] + ", " + data["street"],
-                        style: TextStyle(
-                            color: Colors.black87, fontSize: ksmallFontSize),
-                      ),
-                      Text(
-                        data['postcode'],
-                        style: TextStyle(
-                            color: Colors.black87, fontSize: ksmallFontSize),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        color: kPrimaryColor,
+                          Text(
+                            data['name'],
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: klargeFontSize),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          showDetails
+                              ? TextField(
+                                  // textAlign: TextAlign.left,
+                                  // expands: true,
+                                  // style: TextStyle(height: 5),
+                                  maxLines: null,
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 2),
+                                      ),
+                                      hintText:
+                                          'Add some information about the person.'),
+                                )
+                              : Container(),
+                          Container(
+                            // color: kPrimaryColor,
+                            alignment: Alignment.center,
+                            child: Wrap(
+                              children: [
+                                Container(
+                                  width: 60.0,
+                                  height: 60.0,
+                                  child: Icon(
+                                    Icons.link,
+                                    color: Colors.white,
+                                  ),
+                                  decoration: new BoxDecoration(
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(100.0)),
+                                    border: new Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                // CircleAvatar(
+                                //     radius: 30,
+                                //     foregroundColor: Colors.white,
+                                //     backgroundColor: kPrimaryColor,
+                                //     child: Icon(Icons.link)),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Container(
+                                  width: 60.0,
+                                  height: 60.0,
+                                  child: Icon(
+                                    Icons.phone,
+                                    color: Colors.white,
+                                  ),
+                                  decoration: new BoxDecoration(
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(100.0)),
+                                    border: new Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                // CircleAvatar(
+                                //     radius: 30,
+                                //     foregroundColor: Colors.white,
+                                //     backgroundColor: kPrimaryColor,
+                                //     child: Icon(Icons.phone)),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Container(
+                                  width: 60.0,
+                                  height: 60.0,
+                                  child: Icon(
+                                    Icons.navigation,
+                                    color: Colors.white,
+                                  ),
+                                  decoration: new BoxDecoration(
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(100.0)),
+                                    border: new Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                // CircleAvatar(
+                                //     radius: 30,
+                                //     foregroundColor: Colors.white,
+                                //     backgroundColor: kPrimaryColor,
+                                //     child: Icon(Icons.navigation)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      )),
+                  Center(
+                    child: Container(
                         alignment: Alignment.center,
-                        child: Wrap(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(10),
+                        color: Colors.grey,
+                        child: Column(
                           children: [
-                            CircleAvatar(
-                                radius: 30,
-                                foregroundColor: Colors.white,
-                                backgroundColor: kPrimaryColor,
-                                child: Icon(Icons.link)),
-                            SizedBox(
-                              width: 20,
+                            Text(
+                              // data['postcode'] +
+                              //     "        " +
+                              data['city'] + ", " + data["street"],
+                              style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: ksmallFontSize),
                             ),
-                            CircleAvatar(
-                                radius: 30,
-                                foregroundColor: Colors.white,
-                                backgroundColor: kPrimaryColor,
-                                child: Icon(Icons.phone)),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            CircleAvatar(
-                                radius: 30,
-                                foregroundColor: Colors.white,
-                                backgroundColor: kPrimaryColor,
-                                child: Icon(Icons.navigation)),
+                            // Text(
+                            //   data['postcode'],
+                            //   style: TextStyle(
+                            //       color: Colors.black87,
+                            //       fontSize: ksmallFontSize),
+                            // ),
                           ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  )),
+                        )),
+                  ),
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
@@ -125,6 +217,9 @@ class ShelterInfo extends StatelessWidget {
                         //     ),
                         //   ),
                         // ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Padding(
                           padding: EdgeInsets.all(10.0),
                           child: Text(data['description'],
@@ -143,8 +238,13 @@ class ShelterInfo extends StatelessWidget {
                           elevation: 0,
                           color: kPrimaryColor,
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => Pay()));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                "Yet to come!",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: kskyColor,
+                            ));
                           },
                           child: Text("DONATE TO THIS CHARITY",
                               textAlign: TextAlign.center,

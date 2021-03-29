@@ -33,115 +33,112 @@ class Donate extends StatelessWidget {
           }
 
           return Scaffold(
-            appBar: AppBar(
-              title: Center(
-                child: Text("HOMELESS CHARITIES"),
+              appBar: AppBar(
+                elevation: 0,
+                title: Center(
+                  child: Text("HOMELESS CHARITIES"),
+                ),
+                backgroundColor: kPrimaryColor,
               ),
-              backgroundColor: kPrimaryColor,
-            ),
-            body: ListView(
-              children: snapshot.data.docs.map((DocumentSnapshot shelter) {
-                return new Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black45,
-                      ),
-                      color: Colors.white10,
-                      // borderRadius: BorderRadius.all(Radius.circular(20))
-                    ),
-                    padding: const EdgeInsets.all(20),
-                    child: Row(children: <Widget>[
-                      // Padding(
-                      //   padding: EdgeInsets.fromLTRB(10.0, 0, 20.0, 0),
-                      //   child: CircleAvatar(
-                      //       radius: 20,
-                      //       foregroundColor: Colors.white,
-                      //       backgroundColor: kSecondaryColor,
-                      //       child: Icon(Icons.house)),
-                      // ),
-                      SizedBox(
-                        width: 150,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(shelter.data()["name"],
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: kmediumFontSize)),
-                              Text(
-                                  shelter.data()["city"] +
-                                      ", " +
-                                      shelter.data()["street"],
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: ksmallFontSize)),
-                            ]),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(left: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              RawMaterialButton(
-                                elevation: 0,
-                                onPressed: () {},
-                                fillColor: kPrimaryColor,
-                                padding: EdgeInsets.all(15),
-                                shape: CircleBorder(),
-                                child: Icon(Icons.navigation_rounded,
-                                    color: Colors.white),
-                              ),
-                              RawMaterialButton(
-                                elevation: 0,
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ShelterInfo(
-                                                shelterId: shelter.id,
-                                              )));
-                                },
-                                fillColor: kPrimaryColor,
-                                padding: EdgeInsets.all(13),
-                                shape: CircleBorder(),
-                                child: Text(
-                                  "?",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: kmediumFontSize),
-                                ),
-                              ),
-                            ],
-                          )
-
-                          // child: TextButton(
-                          //     style: ButtonStyle(
-                          //       backgroundColor: MaterialStateProperty.all<Color>(
-                          //           kPrimaryColor),
-                          //       elevation: MaterialStateProperty.all(0),
-                          //     ),
-                          //     onPressed: () {
-                          //       Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //             builder: (context) => ShelterInfo(
-                          //                   shelterId: shelter.id,
-                          //                 )),
-                          //       );
-                          //     },
-                          //     child: Text(
-                          //       "More Info",
-                          //       style: TextStyle(
-                          //           color: Colors.black,
-                          //           fontSize: ksmallFontSize),
-                          //     )),
-                          )
-                    ]));
-              }).toList(),
-            ),
-          );
+              body: ListView(
+                children: [
+                  TextField(
+                    // textAlign: TextAlign.left,
+                    // expands: true,
+                    // style: TextStyle(height: 5),
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey, width: 2),
+                        ),
+                        hintText: 'Search for shelter by city or street.',
+                        prefixIcon: Icon(Icons.search)),
+                  ),
+                  Column(
+                    children:
+                        snapshot.data.docs.map((DocumentSnapshot shelter) {
+                      return new Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black45,
+                            ),
+                            color: Colors.white10,
+                          ),
+                          padding: const EdgeInsets.all(20),
+                          child: Row(children: <Widget>[
+                            SizedBox(
+                              width: 150,
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(shelter.data()["name"],
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: kPrimaryColor,
+                                            fontSize: kmediumFontSize)),
+                                    Text(
+                                        shelter.data()["city"] +
+                                            ", " +
+                                            shelter.data()["street"],
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: ksmallFontSize)),
+                                  ]),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(left: 20.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    RawMaterialButton(
+                                      elevation: 0,
+                                      onPressed: () {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                            "Yet to come!",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          backgroundColor: kskyColor,
+                                        ));
+                                      },
+                                      fillColor: kPrimaryColor,
+                                      padding: EdgeInsets.all(12),
+                                      shape: CircleBorder(),
+                                      child: Text(
+                                        "£",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: kmediumFontSize),
+                                      ),
+                                    ),
+                                    RawMaterialButton(
+                                      elevation: 0,
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ShelterInfo(
+                                                      shelterId: shelter.id,
+                                                    )));
+                                      },
+                                      fillColor: kPrimaryColor,
+                                      padding: EdgeInsets.all(15),
+                                      shape: CircleBorder(),
+                                      child: Icon(Icons.arrow_forward_ios,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ))
+                          ]));
+                    }).toList(),
+                  ),
+                ],
+              ));
         });
   }
 }

@@ -1,10 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/User/donate.dart';
 import 'package:gsc_project/Screens/User/user_report_map.dart';
-import 'package:gsc_project/Screens/Welcome/welcome_screen.dart';
-import 'package:gsc_project/Services/auth.dart';
 
 import '../../constants.dart';
 
@@ -60,7 +57,7 @@ class UserMainScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "Some way longer text here because this page looks so awkward and empty.",
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pharetra est eu facilisis ornare.",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
             ),
