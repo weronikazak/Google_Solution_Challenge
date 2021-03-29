@@ -31,7 +31,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             height: 20,
           ),
           Text(
-            "HOW ARE YOU DOING?",
+            "HOW ARE YOU?",
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: kPrimaryColor,

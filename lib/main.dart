@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         // "/shelterMain": (context) => ShelterMainPage(),
         "/userMain": (context) => UserMainScreen()
       },
-      title: 'How are you doing?',
+      title: 'How are you?',
       theme: ThemeData(
         // fontFamily: "Nunito",
         fontFamily: 'Fjalla One',
