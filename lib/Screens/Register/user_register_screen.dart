@@ -40,7 +40,7 @@ class _NormalUserRegisterState extends State<NormalUserRegister> {
                       textAlign: TextAlign.left),
                   SizedBox(height: 20),
                   Text(
-                    "We need your phone number just to make sure that you're not a robot / different creature / no idea for this description but something like that",
+                    "We need your phone number just to make sure that you're not a robot or any other suspicious creature.",
                     style: TextStyle(color: Colors.grey),
                     textAlign: TextAlign.left,
                   ),

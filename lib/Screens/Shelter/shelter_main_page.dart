@@ -155,7 +155,7 @@ class _ShelterMainPageState extends State<ShelterMainPage> {
                   padding: EdgeInsets.all(10),
                   color: kPrimaryColor,
                   child: Text(
-                    "LATEST RAPORTS",
+                    "LATEST REPORTS",
                     style: TextStyle(
                         color: Colors.white, fontSize: ksmallFontSize),
                   ),

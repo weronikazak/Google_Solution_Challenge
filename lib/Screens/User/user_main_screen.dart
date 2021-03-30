@@ -57,7 +57,7 @@ class UserMainScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pharetra est eu facilisis ornare.",
+              "Please choose one of the available options below.",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
             ),
@@ -92,7 +92,7 @@ class UserMainScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 40),
                               child: Text("donate to \n charity",
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.right,
                                   style: TextStyle(
                                       color: kPrimaryColor,
                                       fontSize: kmediumFontSize)),
@@ -108,7 +108,7 @@ class UserMainScreen extends StatelessWidget {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    side: BorderSide(color: kPrimaryColor)))),
+                                    side: BorderSide(color: kSecondaryColor)))),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -123,7 +123,7 @@ class UserMainScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(10),
                               child: Text("report a person\n in need",
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: kPrimaryColor,
                                       fontSize: kmediumFontSize)),
@@ -134,46 +134,46 @@ class UserMainScreen extends StatelessWidget {
                                     height: imageSize)),
                           ],
                         ))),
-                SizedBox(
-                  height: 20,
-                ),
-                TextButton(
-                    style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    side: BorderSide(
-                                      color: kPrimaryColor,
-                                    )))),
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          "Yet to come!",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        backgroundColor: kskyColor,
-                      ));
-                    },
-                    child: Container(
-                        width: 300,
-                        height: 120,
-                        child: Row(
-                          children: [
-                            Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Image.asset("assets/icons/coffee.png",
-                                    height: imageSize)),
-                            Padding(
-                              padding: EdgeInsets.only(left: 40),
-                              child: Text("buy a coffe",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: kmediumFontSize)),
-                            ),
-                          ],
-                        ))),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // TextButton(
+                //     style: ButtonStyle(
+                //         shape:
+                //             MaterialStateProperty.all<RoundedRectangleBorder>(
+                //                 RoundedRectangleBorder(
+                //                     borderRadius: BorderRadius.circular(20),
+                //                     side: BorderSide(
+                //                       color: kPrimaryColor,
+                //                     )))),
+                //     onPressed: () {
+                //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                //         content: Text(
+                //           "Yet to come!",
+                //           style: TextStyle(color: Colors.white),
+                //         ),
+                //         backgroundColor: kskyColor,
+                //       ));
+                //     },
+                //     child: Container(
+                //         width: 300,
+                //         height: 120,
+                //         child: Row(
+                //           children: [
+                //             Padding(
+                //                 padding: EdgeInsets.all(20),
+                //                 child: Image.asset("assets/icons/coffee.png",
+                //                     height: imageSize)),
+                //             Padding(
+                //               padding: EdgeInsets.only(left: 40),
+                //               child: Text("buy a coffee",
+                //                   textAlign: TextAlign.center,
+                //                   style: TextStyle(
+                //                       color: kPrimaryColor,
+                //                       fontSize: kmediumFontSize)),
+                //             ),
+                //           ],
+                //         ))),
               ],
             ),
           )

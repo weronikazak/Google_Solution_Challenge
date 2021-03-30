@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc_project/Screens/Shelter/shelter_main_page.dart';
 import 'package:gsc_project/Screens/User/user_main_screen.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../constants.dart';
 
@@ -16,6 +17,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final formKey = new GlobalKey<FormState>();
   String phoneEmail, password;
+  SmsAutoFill smsAutoFill = SmsAutoFill();
+
+  TextEditingController phoneEmailController =
+      new TextEditingController(text: "");
 
   bool shelterLogin = false;
 
@@ -42,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: phoneEmailController,
                     decoration: InputDecoration(
                         labelText: "Enter your phone number or email",
                         icon: Icon(Icons.phone_iphone)),
@@ -56,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                       });
                     },
                   ),
+                  SizedBox(height: 20),
                   shelterLogin
                       ? Padding(
                           padding: EdgeInsets.only(left: 40, right: 10),
@@ -71,8 +78,22 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             },
                           ))
-                      : Container(),
-                  SizedBox(height: 40),
+                      : MaterialButton(
+                          onPressed: () async => {
+                            this.phoneEmail = await smsAutoFill.hint,
+                            this.phoneEmailController.text = this.phoneEmail,
+                          },
+                          elevation: 0,
+                          height: 50,
+                          color: kPrimaryColor,
+                          minWidth: double.maxFinite,
+                          child: Text("Get current number",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ksmallFontSize)),
+                          textColor: Colors.white,
+                        ),
+                  SizedBox(height: 20),
                   MaterialButton(
                     onPressed: () {
                       if (phoneEmail != "" && formKey.currentState.validate()) {

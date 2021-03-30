@@ -119,14 +119,6 @@ class _UserReportMapState extends State<UserReportMap> {
                       elevation: 0,
                       child:
                           Image.asset("assets/icons/homeless.png", height: 50),
-                      // child: Text("REPORT"),
-                      // child: Icon(
-                      //   Icons
-                      //       .live_help, // to change, I had no idea what icon should I choose
-                      //   color: Colors.white,
-
-                      //   size: 50,
-                      // ),
                       padding: EdgeInsets.all(30),
                       onPressed: () {
                         Navigator.push(

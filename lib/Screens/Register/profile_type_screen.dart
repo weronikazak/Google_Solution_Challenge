@@ -35,7 +35,7 @@ class _ProfileTypePageState extends State<ProfileTypePage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pharetra est eu facilisis ornare.",
+              "Choose your account type. Select one of the options below.",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey, fontSize: ksmallFontSize),
             ),

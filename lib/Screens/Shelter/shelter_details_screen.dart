@@ -136,7 +136,7 @@ class ShelterDetailsScreenState extends State<ShelterDetailsScreen> {
                           },
                         ),
                         TextFormField(
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.phone,
                           controller: phoneController,
                           decoration:
                               InputDecoration(labelText: "Phone number"),
