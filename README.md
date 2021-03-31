@@ -27,9 +27,7 @@
   </p>
 
 ## How to run the app?
-1. Please make sure you have flutter installed. If you do not, follow the steps from here:
-</br> 
-<a href="https://flutter.dev/docs/get-started/install">Flutter installation guidance</a>.
+1. Please make sure you have flutter installed. If you do not, follow the steps from <a href="https://flutter.dev/docs/get-started/install">here</a>.
 
 2. Open the terminal and clone the repo.
 
