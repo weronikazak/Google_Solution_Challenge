@@ -18,6 +18,12 @@
   </p>
 </p>
 
+  <p align="center">
+  <img src="images/donate.jpg" alt="Logo" width="200">
+  <img src="images/shelter_login.jpg" alt="Logo" width="200">
+  <img src="images/report.jpg" alt="Logo" width="200">
+  </p>
+
 ## How to run the app?
 1. Please make sure you have flutter installed. If you do not, follow the steps from here:
 </br> 
