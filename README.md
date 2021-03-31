@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/weronikazak/GSCProject">
-    <img src="images/app.jpg" alt="Logo" height="150">
+    <img src="images/app.jpg" alt="Logo" height="180">
   </a>
 
   <p align="center">
@@ -8,7 +8,6 @@
     <br />
     <br />
     <strong>Developed by:</strong>
-    <br />
     <br />
     <a href="https://github.com/weronikazak">Weronika Zak</a>
     ·
@@ -27,6 +26,21 @@
   </p>
 
 ## How to run the app?
+### The best way.
+
+1. Open the terminal and clone the repo.
+
+```
+git clone https://github.com/weronikazak/GSC_Project.git
+```
+
+2. Transfer the `HowAreYou.apk` APK to your phone.
+
+3. Navigate to the folder you placed the APK in and install it.
+
+
+### Alternative.
+
 1. Please make sure you have flutter installed. If you do not, follow the steps from <a href="https://flutter.dev/docs/get-started/install">here</a>.
 
 2. Open the terminal and clone the repo.
