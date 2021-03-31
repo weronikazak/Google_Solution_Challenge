@@ -19,9 +19,11 @@
 </p>
 
   <p align="center">
-  <img src="images/donate.jpg" alt="Logo" width="200">
-  <img src="images/shelter_login.jpg" alt="Logo" width="200">
-  <img src="images/report.jpg" alt="Logo" width="200">
+  <img src="images/donate.gif" alt="Logo" width="200">
+  -
+  <img src="images/login_shelter.gif" alt="Logo" width="200">
+  -
+  <img src="images/report.gif" alt="Logo" width="200">
   </p>
 
 ## How to run the app?
