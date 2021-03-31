@@ -40,6 +40,6 @@ git clone https://github.com/weronikazak/GSC_Project.git
 4. Once you clone the repository, type in your terminal:
 
 ```
-cd GSCProject
+cd GSC_Project
 flutter install
 ```
