@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gsc_project">
+    package="com.gsc.how_are_you">
 
   <!-- PERMISSIONS -->
   <uses-permission  
@@ -8,7 +8,7 @@
 
 
    <application
-        android:label="How are you?"
+        android:label="How are You?"
         android:icon="@mipmap/ic_launcher">
 
       <meta-data android:name="com.google.android.geo.API_KEY"

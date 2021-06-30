@@ -8,6 +8,8 @@
 .buildlog/
 .history
 .svn/
+*/key.properties
+*/upload-keystore.jks
 
 # IntelliJ related
 *.iml
@@ -30,6 +32,8 @@
 .pub-cache/
 .pub/
 /build/
+
+*.jks
 
 # Web related
 lib/generated_plugin_registrant.dart

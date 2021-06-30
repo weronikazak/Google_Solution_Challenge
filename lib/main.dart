@@ -19,8 +19,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // Title is to change ofc, I couldn't think of nothing
-      // else
       initialRoute: "/",
       routes: {
         "/": (context) => AuthService().handleAuth(),
