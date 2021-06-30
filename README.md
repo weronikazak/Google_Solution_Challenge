@@ -24,9 +24,31 @@
   -
   <img src="images/report.gif" alt="Logo" width="200">
   </p>
+  
+  
+## About the app
+
+In the video below James explains the idea behind our app. Make sure to check it out!
+
+<p align="center">
+     <a src="https://youtu.be/CHnwr4HSWAg" target="_blank"> <img src="images/yt_icon.jpg"> </a>
+</p>
+
+
+### How to use it?
+
+Text here
+Todo
 
 ## How to run the app?
 ### The best way.
+
+Install the app from <a href="https://play.google.com/store/apps/details?id=com.gsc.how_are_you" target="_blank">Play Store</a>:
+
+<b> IN CASE THE LINK WAS NOT FOUND, PROCEED TO THE STEP BELOW <b>
+
+
+### Another good alternative.
 
 1. Open the terminal and clone the repo.
 
@@ -39,7 +61,7 @@ git clone https://github.com/weronikazak/GSC_Project.git
 3. Navigate to the folder you placed the APK in and install it.
 
 
-### Alternative.
+### Last but not least.
 
 1. Please make sure you have flutter installed. If you do not, follow the steps from <a href="https://flutter.dev/docs/get-started/install">here</a>.
 
