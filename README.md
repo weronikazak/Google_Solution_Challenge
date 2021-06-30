@@ -71,7 +71,7 @@ Install the app from <a href="https://play.google.com/store/apps/details?id=com.
 git clone https://github.com/weronikazak/GSC_Project.git
 ```
 
-2. Transfer the `HowAreYou.apk` APK to your phone.
+2. Transfer the `HowAreYou.apk` from the "APK" folder in repo to your phone.
 
 3. Navigate to the folder you placed the APK in and install it.
 
@@ -97,16 +97,27 @@ flutter install
 
 ## After installation
 
-The app works differently depending on who the user is - a shelter or passer-by.
+The app works differently depending on who the user is: a Shelter or a Passer-by.
 
 ### The app for a Passer-by
 
-1.
-2.
-3.
+1. Login using your Phone Number
+We chose to enable registration to reduce the risk of a bogus call or spam assault. We are aware, however, of the arduous nature of the regestration procedure. That's why we put speed first: simply pressing a button, your phone number is entered and you can use the app.
+2. Donate or Report a Homeless Person
+Choosing the latter
+4. 
+5.
+
+<p align="center">
+       <img src="images/user.png" width="600"> 
+</p>
 
 ### The app for Shelters
 
 1.
 2.
 3.
+
+<p align="center">
+       <img src="images/shelter.png" width="600"> 
+</p>
