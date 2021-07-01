@@ -101,22 +101,39 @@ The app works differently depending on who the user is: a Shelter or a Passer-by
 
 ### The app for a Passer-by
 
-1. Login using your Phone Number
+1. **Register using your Phone Number**
+ 
 We chose to enable registration to reduce the risk of a bogus call or spam assault. We are aware, however, of the arduous nature of the regestration procedure. That's why we put speed first: simply pressing a button, your phone number is entered and you can use the app.
-2. Donate or Report a Homeless Person
-Choosing the latter
-4. 
-5.
+
+2. **Donate to Shelter**
+
+The user has the option of donating to a local shelter or charity. More information about the avenue, including its website, phone number, and location, may be found here.
+
+3.  **Report a Homeless Person**
+
+The main feature though allows to report a person in need. Marking the position of a homeless person is as simple as pressing a point on the integrated map of one's present location and filling out a short survey to describe their appearance so the app may cross-reference it with other descriptions from the same area.
 
 <p align="center">
-       <img src="images/user.png" width="600"> 
+   <img src="images/user.png" width="600"> 
 </p>
 
 ### The app for Shelters
 
-1.
-2.
-3.
+1. **Register using your Email**
+ 
+The process of registering a shelter will require email verification as well as the phone number used to register. This is to ensure that the potentially sensitive information is only sent to legitimate homeless shelters.
+
+2. **Provide Details**
+
+In the next stage you will be asked to provide information about your shelter, including the address, website, and a brief description. The data will be saved in a database and made available to all users.
+
+3.  **Browse Reports**
+
+You'll see the most recent reports in your chosen proximity after logging in (by default: 10 km). You can look through them and get a quick overview of what they're about. The reports are classified by the time they were sent and by the number of times a similar report was sent by various users.
+
+4.  **Accept or Reject the Report**
+
+After you click on report details a map will appear, showing the route between your current position and the probable homeless person's location. If you choose not to approve the report, it will be removed from your report list. Otherwise you will be routed to the place.
 
 <p align="center">
        <img src="images/shelter.png" width="600"> 
